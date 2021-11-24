@@ -1,4 +1,4 @@
-import {FormConfig} from '../model/types/form'
+import {FormConfig} from '../types/form'
 
 export const defaultConfig: FormConfig = {
 	ref: 'elForm',

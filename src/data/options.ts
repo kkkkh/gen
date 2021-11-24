@@ -1,4 +1,4 @@
-import {FormOptionType} from '../model/types/option'
+import {FormOptionType} from '../types/option'
 
 export const typeOptions: FormOptionType[] = [
 	{label: 'input', value: 'input'},

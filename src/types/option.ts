@@ -5,4 +5,4 @@ export type OptionType<T> = {
 	value: string
 }
 
-export type FormOptionType = OptionType<FormKeyType>
+export type FormOptionType = OptionType<Exclude<FormKeyType, undefined>>
