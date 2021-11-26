@@ -7,9 +7,10 @@ module.exports = {
 		'plugin:vue/vue3-essential',
 		'eslint:recommended',
 		'@vue/typescript/recommended',
-		'@vue/prettier',
-		'@vue/prettier/@typescript-eslint',
+		// '@vue/prettier',
+		// '@vue/prettier/@typescript-eslint',
 	],
+	// plugins: ['prettier'],
 	parserOptions: {
 		ecmaVersion: 2020,
 	},
@@ -20,6 +21,6 @@ module.exports = {
 		'no-undef': 'off',
 		'no-unused-vars': 'off',
 		'@typescript-eslint/no-unused-vars': ['off'],
-		'prettier/prettier': ['error', {usePrettierrc: true}],
+		// 'prettier/prettier': ['error', {usePrettierrc: true}],
 	},
 }

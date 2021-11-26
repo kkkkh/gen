@@ -5,7 +5,7 @@ export type FormFeild<T> = {
 	field: string
 	label: string
 	_required: boolean
-	_value: unknown | string
+	_value: string
 }
 
 export type InputFeild = {

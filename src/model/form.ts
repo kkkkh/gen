@@ -19,10 +19,12 @@ export const formModelGen = (formConfig: FormConfig = defaultConfig, formList: F
 	return formModel
 }
 const formListMap = (formlist: FeildType<FormKeyTypeNoUd>[]) => {
-	return formlist.map((item) => {
-		const type = item.type
-		return formItemModelGen(item, gen[type](item))
-	})
+	return formlist
+		.map((item) => {
+			const type = item.type
+			return formItemModelGen(item, gen[type](item))
+		})
+		.join('')
 }
 export const formItemModelGen = (formItem: FeildType<FormKeyTypeNoUd>, genTypeVal: string) => {
 	const formModel = `<el-form-item label="${formItem.label}" prop="${formItem.field}">

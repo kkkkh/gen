@@ -24,21 +24,14 @@ const genFormData = (formList: FeildType<FormKeyTypeNoUd>[]) => {
 	for (const val of formList) {
 		form[val.field] = val._value
 	}
-	return JSON.stringify(form, undefined, ' ')
+	return JSON.stringify(form)
 }
 const genRules = (formList: FeildType<FormKeyTypeNoUd>[]) => {
 	const rules: FormDataType = {}
 	for (const val of formList) {
-		const _required = val._required
-		if (_required) {
-			rules[val.field] = [
-				{
-					required: true,
-					message: `请输入${val.label}`,
-					trigger: RulesTriggerEnum[val.type],
-				},
-			]
+		if (val._required) {
+			rules[val.field] = [{required: val._required, message: `请输入${val.label}`, trigger: RulesTriggerEnum[val.type]}]
 		}
 	}
-	return JSON.stringify(rules, undefined, ' ')
+	return JSON.stringify(rules)
 }
