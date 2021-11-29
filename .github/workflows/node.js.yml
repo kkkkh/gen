@@ -2,9 +2,9 @@ name: Node.js build CI
 
 on:
   push:
-    branches: [ dev ]
+    branches: [ gh-pages ]
   pull_request:
-    branches: [ dev ]
+    branches: [ gh-pages ]
 
 jobs:
   build:
@@ -26,5 +26,5 @@ jobs:
       env:
         PERSONAL_TOKEN: ${{ secrets.ACCESS_TOKEN }}
         PUBLISH_REPOSITORY: kkkkh/gen
-        BRANCH: dev  
+        BRANCH: gh-pages  
         PUBLISH_DIR: ./dist
