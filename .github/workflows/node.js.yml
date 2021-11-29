@@ -19,7 +19,7 @@ jobs:
       run: npm install -g yarn
       
     - name: Build
-      run: yarn install && yarn run build && cp dist/index.html dist/404.html
+      run: yarn install && yarn run build-github
       
     - name: Deploy 🚀
       uses: JamesIves/github-pages-deploy-action@4.1.7
