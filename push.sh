@@ -1,4 +1,4 @@
-read commit_m
+# read commit_m
 git add .
-git commit -m "$commit_m"
-git push
+git commit -m "$1"
+git push "$2" dev
