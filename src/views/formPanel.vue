@@ -20,7 +20,7 @@
               },
             ]"
           >
-            <el-select v-model="form.type" clearable @change="(type) => typeChange(type, index)">
+            <el-select v-model="form.type" clearable @change="(type: FormKeyType) => typeChange(type, index)">
               <el-option v-for="(item, index) in typeOptions" :key="index" :value="item.value">{{ item.label }}</el-option>
             </el-select>
           </el-form-item>
