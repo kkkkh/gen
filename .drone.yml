@@ -19,7 +19,7 @@ steps:
     - docker build -t kkkkh/blog:dev .
     - docker stop blog
     - docker rm blog
-    - docker run -d -p 80:90 --name blog kkkkh/blog:dev
+    - docker run -d -p 8080:90 --name blog kkkkh/blog:dev
     # - name: docker
     #   image: plugins/docker
     #   settings:
