@@ -1,6 +1,6 @@
 import {defineConfig, loadEnv} from 'vite'
 import vue from '@vitejs/plugin-vue'
-
+import alias from '@rollup/plugin-alias'
 // https://vitejs.dev/config/
 // console.log('import.meta.env.VITE_APP_BASE_URL', import.meta.env)
 // // console.log('process.env', process.env)
@@ -12,7 +12,12 @@ import vue from '@vitejs/plugin-vue'
 
 export default ({mode}) => {
 	return defineConfig({
-		plugins: [vue()],
+		plugins: [
+			vue(),
+			alias({
+				entries: [{find: /@\/(.*)/, replacement: '/src/$1'}],
+			}),
+		],
 		base: loadEnv(mode, process.cwd()).VITE_APP_BASE_URL,
 	})
 }

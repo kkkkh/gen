@@ -8,17 +8,16 @@ const routes: Array<RouteRecordRaw> = [
 	{
 		path: '/form',
 		name: 'form',
-		component: () => import(/* webpackChunkName: "home" */ '../views/form.vue'),
+		component: () => import(/* webpackChunkName: "form" */ '../views/form.vue'),
 	},
-	// {
-	//   path: "/about",
-	//   name: "About",
-	//   // route level code-splitting
-	//   // this generates a separate chunk (about.[hash].js) for this route
-	//   // which is lazy-loaded when the route is visited.
-	//   component: () =>
-	//     import(/* webpackChunkName: "about" */ "../views/About.vue")
-	// }
+	{
+		path: '/table',
+		name: 'table',
+		// route level code-splitting
+		// this generates a separate chunk (about.[hash].js) for this route
+		// which is lazy-loaded when the route is visited.
+		component: () => import(/* webpackChunkName: "table" */ '../views/table.vue'),
+	},
 ]
 
 const router = createRouter({

@@ -20,7 +20,7 @@
               },
             ]"
           >
-            <el-select v-model="form.type" clearable @change="(type: FormKeyType) => typeChange(type, index)">
+            <el-select v-model="form.type" clearable @change="(type: any) => typeChange(type, index)">
               <el-option v-for="(item, index) in typeOptions" :key="index" :value="item.value">{{ item.label }}</el-option>
             </el-select>
           </el-form-item>
@@ -56,13 +56,12 @@ import { typeOptions } from '../data/options'
 import { formModelGen } from '../model/form'
 import { FeildType } from '../types/field'
 import { initData } from '../data/init'
-import { FormKeyType, FormKeyTypeNoUd } from '../types/form'
+import { FormKeyType, FormKeyTypeNoUd } from '@/types/form'
 import { ElForm } from 'element-plus'
 import { getField } from '../data/default'
 import { Delete } from '@element-plus/icons'
-import prettier from '../lib/prettier/esm/standalone.mjs'
-import parserHtml from '../lib/prettier/esm/parser-html.mjs'
-import parserBabel from '../lib/prettier/esm/parser-babel.mjs'
+import { prettierFormat } from '../utils/format'
+
 const props = defineProps<{
   code: string
 }>()
@@ -76,27 +75,8 @@ const genHandle = () => {
   elFormRef.value?.validate((valid: boolean) => {
     if (valid) {
       const code = formModelGen(undefined, ruleForm.value as FeildType<FormKeyTypeNoUd>[])
-      const formatCode = prettier.format(code, {
-        parser: 'vue',
-        plugins: [parserBabel, parserHtml],
-        arrowParens: 'avoid',
-        bracketSameLine: true,
-        bracketSpacing: false,
-        embeddedLanguageFormatting: 'auto',
-        htmlWhitespaceSensitivity: 'ignore',
-        insertPragma: false,
-        jsxSingleQuote: true,
-        printWidth: 80,
-        proseWrap: 'never',
-        quoteProps: 'preserve',
-        requirePragma: false,
-        semi: true,
-        singleQuote: true,
-        tabWidth: 2,
-        trailingComma: 'all',
-        useTabs: false,
-        vueIndentScriptAndStyle: true,
-      })
+      const formatCode = prettierFormat(code)
+      console.log(formatCode)
       emits('update:code', formatCode)
     } else {
       console.log('error validate!!')
