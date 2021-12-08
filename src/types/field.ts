@@ -1,3 +1,4 @@
+import exp from 'constants'
 import {FormKeyTypeNoUd} from './form'
 
 export type FormFeild<T> = {
@@ -17,10 +18,30 @@ export type CheckboxFeild = {
 }
 
 export type SelectFeild = {
-	// _message?: string
+	_option?: string
 }
 
-export type FeildType<T> = InputFeild & CheckboxFeild & SelectFeild & FormFeild<T>
+export type RadioFeild = {
+	_option?: string
+}
+export type TextareaFeild = {
+	_rows?: number
+	_maxlength?: number
+}
+export type UoloadFeild = {
+	_multiple?: boolean
+	_limit?: number
+	_accept?: string
+	_size?: number
+}
+
+export type FeildType<T> = FormFeild<T> &
+	InputFeild &
+	CheckboxFeild &
+	SelectFeild &
+	RadioFeild &
+	TextareaFeild &
+	UoloadFeild
 
 // export type FormListType = Array<InputFeild | CheckboxFeild | SelectFeild>
 
@@ -31,3 +52,5 @@ export type GenFunType = {
 export type InitFunType = {
 	[P in FormKeyTypeNoUd]: () => Omit<FeildType<FormKeyTypeNoUd>, keyof FormFeild<FormKeyTypeNoUd>>
 }
+
+export type GenScriptDataType = (formList: FeildType<FormKeyTypeNoUd>[]) => string

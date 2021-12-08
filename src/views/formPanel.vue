@@ -26,15 +26,36 @@
           </el-form-item>
           <el-button class="ml-4" v-if="index !== 0" type="danger" :icon="Delete" @click="delHandle(index)"></el-button>
         </div>
-        <div class="flex">
+        <div class="flex flex-wrap">
           <el-form-item label="_value" prop="_value">
             <el-input v-model="form._value" clearable></el-input>
           </el-form-item>
-          <el-form-item label="_required" prop="_required">
+          <el-form-item style="width:258px" label="_required" prop="_required">
             <el-checkbox v-model="form._required" clearable></el-checkbox>
           </el-form-item>
           <el-form-item v-if="'_message' in form" label="_message" prop="_message">
             <el-input v-model="form._message" clearable></el-input>
+          </el-form-item>
+          <el-form-item v-if="'_option' in form" label="_option" prop="_option">
+            <el-input v-model="form._option" clearable></el-input>
+          </el-form-item>
+          <el-form-item v-if="'_rows' in form" label="_rows" prop="_rows">
+            <el-input-number v-model="form._rows" clearable></el-input-number>
+          </el-form-item>
+          <el-form-item v-if="'_maxlength' in form" label="_maxlength" prop="_maxlength">
+            <el-input-number v-model="form._maxlength" clearable></el-input-number>
+          </el-form-item>
+          <el-form-item v-if="'_size' in form" label="_size(MB)" prop="_size">
+            <el-input-number v-model="form._size" clearable :max="100" :min="0"></el-input-number>
+          </el-form-item>
+          <el-form-item v-if="'_accept' in form" label="_accept" prop="_accept">
+            <el-input v-model="form._accept"></el-input>
+          </el-form-item>
+          <el-form-item v-if="'_multiple' in form" label="_multiple" prop="_multiple">
+            <el-checkbox v-model="form._multiple"></el-checkbox>
+          </el-form-item>
+          <el-form-item v-if="form._multiple" label="_limit" prop="_limit">
+            <el-input-number v-model="form._limit" clearable :max="100" :min="0"></el-input-number>
           </el-form-item>
         </div>
       </div>
@@ -104,3 +125,9 @@ const addHandle = () => {
   ruleForm.value.push(getField())
 }
 </script>
+<style>
+.el-form-item__content {
+  width: 178px;
+  @apply text-left;
+}
+</style>
