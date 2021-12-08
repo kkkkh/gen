@@ -20,7 +20,7 @@ export const initData: InitFunType = {
 	upload: () => ({
 		_multiple: false,
 		_limit: 1,
-		_accept: 'image/*,.rar,.zip,.doc,.docx,.pdf,.xls,.xlsx',
+		_accept: '.png,.jpg,.rar,.zip,.doc,.docx,.pdf,.xls,.xlsx',
 		_size: 1,
 	}),
 }

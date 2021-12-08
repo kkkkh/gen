@@ -68,17 +68,17 @@ const genUpload: GenScriptDataType = (formList) => {
 			.map((item) => {
 				return `
 				const ${item.field}FileList = []
-				const ${item.field}Accept = ${item._accept}
+				const ${item.field}Accept = "${item._accept}"
 				const ${item.field}HandleSuccess = (res, file,fileList)=>{
 					form.${item.field} = res.data
 				}
 				const ${item.field}BeforeUpload = (file)=>{
-					const isType = ${item.field}Accept.incldes(file.type);
+					const isType = ${item.field}Accept.includes(file.type);
 					if (!isType) {
 						this.$message.error('文件格式不正确');
 					}
 					const isSize = file.size / 1024 / 1024 < ${item._size};
-					if (!isLt2M) {
+					if (!isSize) {
 					  this.$message.error('文件大小不超过${item._size}MB!');
 					}
 					return isType && isSize;

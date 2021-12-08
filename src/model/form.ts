@@ -72,7 +72,7 @@ export const gen: GenFunType = {
 		:multiple="${val._multiple}"
 		:limit="${val._multiple ? val._limit : 1}"
 		:file-list="${val.field}FileList"
-		:accept="${val._accept}">
+		:accept="${val.field}Accept">
 		<el-button size="mini" type="primary">点击上传</el-button>
 		<div slot="tip" class="el-upload__tip">只能上传${val._accept}格式文件，且不超过${val._size}MB</div>
 	  </el-upload>`
