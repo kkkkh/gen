@@ -1,51 +1,78 @@
-import {FeildType, GenScriptDataType} from './../types/field'
-import {FormDataType, RulesTriggerEnum, FormKeyTypeNoUd} from './../types/form'
+import {GenScriptType, GenSetupItemType, SetupItemKeyType} from './../types/gen'
+import {GenSetupType, GenSetupReType} from './../types/gen'
+import {FormDataType, RulesTriggerEnum} from './../types/form'
 import {select} from '@/data/word'
-export const genScript = {
-	vue2x: (formList: FeildType<FormKeyTypeNoUd>[]) => {
-		const formData = genFormData(formList)
-		const rules = genRules(formList)
-		const selectOption = genSelectOption(formList)
-		const upload = genUpload(formList)
+
+const genSetUp: GenSetupType = (formList) => {
+	const keys = Object.keys(genSetUpItem) as SetupItemKeyType[]
+	const val = keys.map((key: SetupItemKeyType) => genSetUpItem[key](formList))
+	return val.reduce((pre, next) => {
+		return {
+			values: `${pre.values}\n${next.values}`,
+			vars: `${pre.vars}\n${next.vars}`,
+		}
+	})
+}
+export const genScript: GenScriptType = {
+	vue2x: (formList) => {
+		const {values, vars} = genSetUp(formList)
 		return `<script>
-                import {defineComponent, ref, reactive, computed} from '@vue/composition-api'
+                import {defineComponent, reactive} from '@vue/composition-api'
                 export default defineComponent({
                     setup (props, ctx) {
-                        const form = reactive(${formData})
-                        const rules = ${rules} 
-						${selectOption}
-						${upload}
+                        ${values}
                         return {
-                            form,
+							${vars}
                         }
                     }
                 })
             </script>`
 	},
+	vue3x: (formList) => {
+		const {values} = genSetUp(formList)
+		return `
+		<script lang="ts">
+			export default {
+			name: 'gen-form',
+			}
+		</script>
+		<script lang="ts" setup>
+			import {reactive} from 'vue'
+			${values}
+        </script>`
+	},
 }
 
-const genFormData: GenScriptDataType = (formList) => {
-	const form: FormDataType = {}
-	for (const val of formList) {
-		form[val.field] = val._value
-	}
-	return JSON.stringify(form)
-}
-const genRules: GenScriptDataType = (formList) => {
-	const rules: FormDataType = {}
-	for (const val of formList) {
-		if (val._required) {
-			rules[val.field] = [{required: val._required, message: `请输入${val.label}`, trigger: RulesTriggerEnum[val.type]}]
+const genSetUpItem: GenSetupItemType = {
+	genForm: (formList) => {
+		const form: FormDataType = {}
+		for (const val of formList) {
+			form[val.field] = val._value
 		}
-	}
-	return JSON.stringify(rules)
-}
-const genSelectOption: GenScriptDataType = (formList) => {
-	const selects = formList.filter((item) => item.type === 'select')
-	let selectOption = ''
-	if (selects.length > 0) {
-		selectOption = selects
-			.map((item) => {
+		return {
+			values: `const form = reactive( ${JSON.stringify(form)})`,
+			vars: 'form,',
+		}
+	},
+	genRules: (formList) => {
+		const rules: FormDataType = {}
+		for (const val of formList) {
+			if (val._required) {
+				rules[val.field] = [
+					{required: val._required, message: `请输入${val.label}`, trigger: RulesTriggerEnum[val.type]},
+				]
+			}
+		}
+		return {
+			values: `const rules = ${JSON.stringify(rules)}`,
+			vars: 'rules,',
+		}
+	},
+	genSelect: (formList) => {
+		const selects = formList.filter((item) => item.type === 'select')
+		let selectOption: GenSetupReType[] = []
+		if (selects.length > 0) {
+			selectOption = selects.map((item) => {
 				const option = item._option ? item._option.split(/\s+/) : select
 				const arr = option.map((val, index) => {
 					return {
@@ -53,42 +80,55 @@ const genSelectOption: GenScriptDataType = (formList) => {
 						value: index,
 					}
 				})
-				return `const ${item.field}Options = ${JSON.stringify(arr)}`
+				return {
+					values: `const ${item.field}Options = ${JSON.stringify(arr)}`,
+					vars: `${item.field}Options,`,
+				}
 			})
-			.join('\n')
-	}
-	return selectOption
-}
-
-const genUpload: GenScriptDataType = (formList) => {
-	const uploads = formList.filter((item) => item.type === 'upload')
-	let uploadVar = ''
-	if (uploads.length > 0) {
-		uploadVar = uploads
-			.map((item) => {
-				return `
-				const ${item.field}FileList = []
-				const ${item.field}Accept = "${item._accept}"
-				const ${item.field}HandleSuccess = (res, file,fileList)=>{
-					form.${item.field} = res.data
+		}
+		return {
+			vars: selectOption.map((item) => item.vars).join('\n'),
+			values: selectOption.map((item) => item.values).join('\n'),
+		}
+	},
+	genUpload: (formList) => {
+		const uploads = formList.filter((item) => item.type === 'upload')
+		let uploadVar: GenSetupReType[] = []
+		if (uploads.length > 0) {
+			uploadVar = uploads.map((item) => {
+				const fileList = `${item.field}FileList`
+				const accept = `${item.field}Accept`
+				const handleSuccess = `${item.field}HandleSuccess`
+				const beforeUpload = `${item.field}BeforeUpload`
+				const handleRemove = `${item.field}HandleRemove`
+				return {
+					values: `
+							const ${fileList} = []
+							const ${accept} = "${item._accept}"
+							const ${handleSuccess} = (res, file,fileList)=>{
+								form.${item.field} = res.data
+							}
+							const ${beforeUpload} = (file)=>{
+								const isType = ${item.field}Accept.includes(file.type);
+								if (!isType) {
+									this.$message.error('文件格式不正确');
+								}
+								const isSize = file.size / 1024 / 1024 < ${item._size};
+								if (!isSize) {
+								this.$message.error('文件大小不超过${item._size}MB!');
+								}
+								return isType && isSize;
+							}
+							const ${handleRemove} = (file,fileList)=>{
+								form.${item.field} = ""
+						}`,
+					vars: `${fileList},\n${accept},\n${handleSuccess},\n${beforeUpload},\n${handleRemove},`,
 				}
-				const ${item.field}BeforeUpload = (file)=>{
-					const isType = ${item.field}Accept.includes(file.type);
-					if (!isType) {
-						this.$message.error('文件格式不正确');
-					}
-					const isSize = file.size / 1024 / 1024 < ${item._size};
-					if (!isSize) {
-					  this.$message.error('文件大小不超过${item._size}MB!');
-					}
-					return isType && isSize;
-				}
-				const ${item.field}HandleRemove = (file,fileList)=>{
-					form.${item.field} = ""
-				}
-			`
 			})
-			.join('\n')
-	}
-	return uploadVar
+		}
+		return {
+			values: uploadVar.map((item) => item.values).join('\n'),
+			vars: uploadVar.map((item) => item.vars).join('\n'),
+		}
+	},
 }

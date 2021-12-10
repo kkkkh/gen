@@ -1,39 +1,37 @@
-import {FormConfig, FormKeyTypeNoUd} from '../types/form'
-import {FeildType, GenFunType} from '../types/field'
+import {FormListType, FormItemType, GenComponentType} from './../types/field'
+import {FormConfig} from '../types/config'
 import {defaultConfig} from '../data/default'
-import {genScript} from './script'
 import {radio} from '@/data/word'
 
-export const formModelGen = (formConfig: FormConfig = defaultConfig, formList: FeildType<FormKeyTypeNoUd>[]) => {
+export const genFormModel = (formConfig: FormConfig = defaultConfig, formList: FormListType) => {
 	const formModel = `<template>
 		<el-form
 			ref="${formConfig.ref}"
 			:model="${formConfig.model}"
 			:rules="${formConfig.rules}"
-			label-width="${formConfig._labelWidth}"
+			label-width="${formConfig._labelWidth}px"
 			class="${formConfig.class}"
 		>
-			${formListMap(formList)}
+			${genFormListModel(formList)}
 		</el-form>
-	</template>
-	${genScript.vue2x(formList)}`
+	</template>`
 	return formModel
 }
-const formListMap = (formlist: FeildType<FormKeyTypeNoUd>[]) => {
+const genFormListModel = (formlist: FormListType) => {
 	return formlist
 		.map((item) => {
 			const type = item.type
-			return formItemModelGen(item, gen[type](item))
+			return formItemModelGen(item, genComponent[type](item))
 		})
 		.join('')
 }
-export const formItemModelGen = (formItem: FeildType<FormKeyTypeNoUd>, genTypeVal: string) => {
+export const formItemModelGen = (formItem: FormItemType, genTypeVal: string) => {
 	const formModel = `<el-form-item label="${formItem.label}" prop="${formItem.field}">
       ${genTypeVal}
     </el-form-item>`
 	return formModel
 }
-export const gen: GenFunType = {
+export const genComponent: GenComponentType = {
 	input: (val) => {
 		const inputModel = `<el-input v-model="form.${val.field}" placeholder="请输入${val.label}" clearable />`
 		return inputModel

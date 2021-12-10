@@ -1,6 +1,6 @@
-import {InitFunType} from './../types/field'
+import {InitDataType} from './../types/field'
 
-export const initData: InitFunType = {
+export const initData: InitDataType = {
 	input: () => {
 		return {}
 	},

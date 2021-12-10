@@ -1,6 +1,20 @@
 <template>
   <div class="gen-form">
-    <el-form class="demo-ruleForm" ref="elFormRef" label-width="80px" size="mini" :model="ruleForm">
+    <div class="flex flex-col items-start">
+      <config-form-drawer ref="configFormDrawer">
+        <template #default>
+          <div>
+            <el-tooltip effect="dark" content="add 增加" placement="top-start">
+              <el-button @click="addHandle">add</el-button>
+            </el-tooltip>
+            <el-tooltip effect="dark" content="gen 生成" placement="top-start">
+              <el-button @click="genHandle">gen</el-button>
+            </el-tooltip>
+          </div>
+        </template>
+      </config-form-drawer>
+    </div>
+    <el-form ref="elFormRef" label-width="80px" size="mini" :model="ruleForm">
       <div class="flex flex-col p-4 bg-gray-500 odd:bg-gray-900" v-for="(form, index) in ruleForm" :key="index">
         <div class="flex items-start">
           <el-form-item label="field" prop="field">
@@ -60,9 +74,17 @@
         </div>
       </div>
     </el-form>
-    <div>
-      <el-button @click="addHandle">add</el-button>
-      <el-button @click="genHandle">gen</el-button>
+    <div class="flex m-2 items-center">
+      <span class="text-xs" v-if="storage.length">storage：</span>
+      <div class="relative mx-2 my-1" v-for="(item,index) in storage" :key="index">
+        <el-icon
+          class="absolute z-10 right-0 top-0 -mr-2 -mt-1 cursor-pointer text-red-600 hover:text-red-500"
+          @click="deleteStorage(item.label, index)"
+        >
+          <circle-close-filled />
+        </el-icon>
+        <el-button @click="viewStorage(index)">{{ item.label }}</el-button>
+      </div>
     </div>
   </div>
 </template>
@@ -74,32 +96,51 @@ export default {
 <script lang="ts" setup>
 import { ref } from 'vue'
 import { typeOptions } from '../data/options'
-import { formModelGen } from '../model/form'
-import { FeildType } from '../types/field'
+import { genTemplete } from '../model/templete'
+import { FeildType, FormListType } from '../types/field'
 import { initData } from '../data/init'
-import { FormKeyType, FormKeyTypeNoUd } from '@/types/form'
-import { ElForm } from 'element-plus'
+import { FormKeyType } from '@/types/form'
+import { ElForm, ElMessage } from 'element-plus'
 import { getField } from '../data/default'
-import { Delete } from '@element-plus/icons'
+import { Delete, CircleCloseFilled } from '@element-plus/icons'
 import { prettierFormat } from '../utils/format'
+import { configHandle, setConfigForm } from "@/hooks/config"
+import ConfigFormDrawer from '@/components/configFormDrawer.vue'
+import { storageHandle } from '@/hooks/storage'
 
-const props = defineProps<{
+defineProps<{
   code: string
 }>()
+
 const emits = defineEmits(['update:code'])
 const elFormRef = ref<typeof ElForm>()
 const ruleForm = ref<FeildType<FormKeyType>[]>([getField()])
 const delHandle = (index: number) => {
   ruleForm.value.splice(index, 1)
 }
+const { configForm } = configHandle()
+const { storage, setStorage, getStorage, deleteStorage } = storageHandle('form')
+
+const viewStorage = (index: number) => {
+  const storageValue = getStorage(index)
+  ruleForm.value = storageValue.ruleForm
+  setConfigForm(storageValue.configForm)
+  viewCodeHandle()
+}
+
+const viewCodeHandle = () => {
+  // debugger
+  const code = genTemplete(configForm, ruleForm.value as FormListType)
+  const formatCode = prettierFormat(code)
+  emits('update:code', formatCode)
+}
 const genHandle = () => {
   elFormRef.value?.validate((valid: boolean) => {
     if (valid) {
-      const code = formModelGen(undefined, ruleForm.value as FeildType<FormKeyTypeNoUd>[])
-      const formatCode = prettierFormat(code)
-      console.log(formatCode)
-      emits('update:code', formatCode)
+      viewCodeHandle()
+      setStorage({ configForm, ruleForm: ruleForm.value as FormListType })
     } else {
+      ElMessage.error("error validate!!")
       console.log('error validate!!')
     }
   })
@@ -124,6 +165,7 @@ const typeChange = (key: FormKeyType, index: number) => {
 const addHandle = () => {
   ruleForm.value.push(getField())
 }
+
 </script>
 <style>
 .el-form-item__content {
