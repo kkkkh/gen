@@ -109,6 +109,8 @@ const genSetUpItem: GenSetupItemType = {
 								form.${item.field} = res.data
 							}
 							const ${beforeUpload} = (file)=>{
+								const files = file.name.split(".")
+								const type = filters.length > 0 ? filters[filters.length-1]:*
 								const isType = ${item.field}Accept.includes(file.type);
 								if (!isType) {
 									this.$message.error('文件格式不正确');

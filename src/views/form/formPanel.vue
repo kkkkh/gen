@@ -95,17 +95,17 @@ export default {
 </script>
 <script lang="ts" setup>
 import { ref } from 'vue'
-import { typeOptions } from '../data/options'
-import { genTemplete } from '../model/templete'
-import { FeildType, FormListType } from '../types/field'
-import { initData } from '../data/init'
+import { typeOptions } from '@/data/options'
+import { genTemplete } from '@/model/templete'
+import { FeildType, FormListType } from '@/types/field'
+import { initData } from '@/data/init'
 import { FormKeyType } from '@/types/form'
 import { ElForm, ElMessage } from 'element-plus'
-import { getField } from '../data/default'
+import { getField } from '@/data/default'
 import { Delete, CircleCloseFilled } from '@element-plus/icons'
-import { prettierFormat } from '../utils/format'
+import { prettierFormat } from '@/utils/format'
 import { configHandle, setConfigForm } from "@/hooks/config"
-import ConfigFormDrawer from '@/components/configFormDrawer.vue'
+import ConfigFormDrawer from '@/components/form/configFormDrawer.vue'
 import { storageHandle } from '@/hooks/storage'
 
 defineProps<{

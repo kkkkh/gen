@@ -13,5 +13,5 @@ defineExpose({
   CodePanel,
   FormPanel,
 });
-const code = ref("");
+const code = ref('');
 </script>

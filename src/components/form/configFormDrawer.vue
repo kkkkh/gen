@@ -35,7 +35,7 @@
 <script setup lang="ts">
 import { ref, reactive } from "vue";
 import { configHandle } from "@/hooks/config";
-import { scriptOptions } from '../data/options'
+import { scriptOptions } from '@/data/options'
 
 const direction = ref('rtl')
 

@@ -1,15 +1,8 @@
 <template>
+  <!-- <div class="p-4 bg-gray-700 text-left relative" contenteditable readonly> -->
   <div class="p-4 bg-gray-700 text-left relative" contenteditable readonly>
-    <el-button
-      :contenteditable="false"
-      class="absolute right-0 top-0 mr-2 mt-2"
-      size="small"
-      type="primary"
-      @click="copyHandle"
-    >copy</el-button>
-    <div id="code-main">
-      <pre>{{ codeView }}</pre>
-    </div>
+    <el-button class="absolute right-0 top-0 mr-2 mt-2 z-10" size="small" type="primary" @click="copyHandle">copy</el-button>
+    <code-eidt :value="code"></code-eidt>
   </div>
 </template>
 <script lang="ts">
@@ -20,6 +13,7 @@ export default {
 <script lang="ts" setup>
 import { ElMessage } from "element-plus";
 import { computed } from "vue";
+import CodeEidt from "@/components/form/codeEidt.vue";
 
 const props = defineProps({
   code: {

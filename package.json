@@ -10,12 +10,15 @@
 	},
 	"dependencies": {
 		"@element-plus/icons": "^0.0.11",
+		"@emmetio/codemirror-plugin": "^1.2.4",
+		"codemirror": "^5.65.0",
 		"element-plus": "^1.2.0-beta.3",
 		"vue": "^3.2.16",
 		"vue-router": "^4.0.12"
 	},
 	"devDependencies": {
 		"@rollup/plugin-alias": "^3.1.8",
+		"@types/codemirror": "^5.60.5",
 		"@types/node": "^16.11.10",
 		"@typescript-eslint/eslint-plugin": "^5.4.0",
 		"@typescript-eslint/parser": "^5.4.0",
