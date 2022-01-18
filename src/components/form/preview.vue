@@ -1,1 +1,36 @@
-https://unpkg.com/browse/@vue/composition-api@1.4.3/dist/vue-composition-api.mjs
+<template>
+    <div ref="iframeDiv"></div>
+    <!-- // https://unpkg.com/browse/@vue/composition-api@1.4.3/dist/vue-composition-api.mjs -->
+</template>
+<script setup lang="ts">
+import { ref, onMounted, watch } from "vue";
+import createIframe from "@/utils/iframe";
+const iframeDiv = ref();
+const iframe = ref();
+const props = defineProps({
+    value: {
+        type: String,
+        default: ""
+    }
+})
+watch(() => props.value, (val: string) => {
+    iframe.value.setHTML(val);
+})
+onMounted(() => {
+    const sandboxAttributes = [
+        'allow-modals',
+        'allow-forms',
+        'allow-pointer-lock',
+        'allow-popups',
+        'allow-same-origin',
+        'allow-scripts'
+    ];
+    iframe.value = createIframe(
+        {
+            el: iframeDiv.value,
+            sandboxAttributes
+        }
+    )
+})
+</script>
+

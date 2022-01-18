@@ -20,6 +20,7 @@ module.exports = {
 		// note you must disable the base rule as it can report incorrect errors
 		'no-undef': 'off',
 		'no-unused-vars': 'off',
+		'no-useless-escape':'off',
 		'@typescript-eslint/no-unused-vars': ['off'],
 		// 'prettier/prettier': ['error', {usePrettierrc: true}],
 	},

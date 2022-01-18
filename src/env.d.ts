@@ -1,4 +1,6 @@
 /// <reference types="vite/client" />
+/// <reference types="vue-template-compiler" />
+/// <reference types="babel__standalone" />
 
 declare module '*.vue' {
 	import {DefineComponent} from 'vue'
@@ -10,4 +12,12 @@ declare module '*.vue' {
 declare module '*.mjs' {
 	type format = () => string
 	export default {format}
+}
+
+declare module 'vue-template-compiler/browser' {
+	export function parseComponent(file: string, options?: SFCParserOptions): SFCDescriptor
+}
+
+interface Window {
+	Babel: babel
 }

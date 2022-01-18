@@ -1,7 +1,7 @@
 import {ParserType, ParseHandleType} from '@/types/format'
-import prettier from '@/lib/prettier/esm/standalone.mjs'
-import parserHtml from '../lib/prettier/esm/parser-html.mjs'
-import parserBabel from '../lib/prettier/esm/parser-babel.mjs'
+import prettier from 'https://unpkg.com/prettier@2.5.1/esm/standalone.mjs'
+import parserHtml from 'https://unpkg.com/prettier@2.5.1/esm/parser-html.mjs'
+import parserBabel from 'https://unpkg.com/prettier@2.5.1/esm/parser-babel.mjs'
 export const prettierFormat = (code: string, parserType: ParserType = 'vue') => {
 	return parserHandle[parserType](code)
 }
