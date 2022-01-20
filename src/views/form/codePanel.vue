@@ -25,7 +25,7 @@ import { computed, watch, ref } from "vue";
 import CodeEidt from "@/components/form/codeEidt.vue";
 import Preview from "@/components/form/preview.vue";
 import { parseComponent } from "vue-template-compiler";
-import getImports from "@/utils/get-imports.js"
+import getImports from "@/utils/get-imports.ts"
 import importsCompiledHandle from '@/utils/compiled-import'
 const props = defineProps({
   code: {
@@ -41,7 +41,6 @@ const transformCode = (val: string) => {
   const { template, script } = parseComponent(val)
   let compiled;
   const imports: [] = [];
-
   if (script) {
     try {
       compiled = window?.Babel.transform(script.content, {

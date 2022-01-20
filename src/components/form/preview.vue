@@ -1,6 +1,5 @@
 <template>
     <div ref="iframeDiv"></div>
-    <!-- // https://unpkg.com/browse/@vue/composition-api@1.4.3/dist/vue-composition-api.mjs -->
 </template>
 <script setup lang="ts">
 import { ref, onMounted, watch } from "vue";

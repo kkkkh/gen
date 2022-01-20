@@ -1,12 +1,4 @@
-type VariablesType = {
-	local: string
-	imported: string
-}
-type ImportsItemType = {
-	variables: VariablesType[]
-	module: string
-}
-type ImportsType = ImportsItemType[]
+import {ImportsType} from '@/types/imports'
 
 const globalVar: {[name: string]: string} = {
 	'@vue/composition-api': 'VueCompositionAPI',
