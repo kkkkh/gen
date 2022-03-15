@@ -8,48 +8,58 @@ export type FormFeild<T> = {
 	_value: string
 }
 
-export type InputFeild = {
+export type InputFeild<T> = FormFeild<T> & {
 	//
 }
 
-export type CheckboxFeild = {
+export type CheckboxFeild<T> = FormFeild<T> & {
 	_message?: string
 }
 
-export type SelectFeild = {
+export type SelectFeild<T> = FormFeild<T> & {
 	_option?: string
 }
 
-export type RadioFeild = {
+export type RadioFeild<T> = FormFeild<T> & {
 	_option?: string
 }
-export type TextareaFeild = {
+export type TextareaFeild<T> = FormFeild<T> & {
 	_rows?: number
 	_maxlength?: number
 }
-export type UoloadFeild = {
+export type UploadFeild<T> = FormFeild<T> & {
 	_multiple?: boolean
 	_limit?: number
 	_accept?: string
 	_size?: number
 }
 
-export type FeildType<T> = FormFeild<T> &
-	InputFeild &
-	CheckboxFeild &
-	SelectFeild &
-	RadioFeild &
-	TextareaFeild &
-	UoloadFeild
+export type FeildType<T> =
+	| InputFeild<T>
+	| CheckboxFeild<T>
+	| SelectFeild<T>
+	| RadioFeild<T>
+	| TextareaFeild<T>
+	| UploadFeild<T>
+
+export type StoreFiledType<T = FormKeyTypeNoUd> = {
+	input: InputFeild<T>
+	checkbox: CheckboxFeild<T>
+	select: SelectFeild<T>
+	radio: RadioFeild<T>
+	textarea: TextareaFeild<T>
+	upload: UploadFeild<T>
+}
 
 // export type FormListType = Array<InputFeild | CheckboxFeild | SelectFeild>
 export type FormItemType = FeildType<FormKeyTypeNoUd>
 export type FormListType = FeildType<FormKeyTypeNoUd>[]
 
 export type GenComponentType = {
-	[P in FormKeyTypeNoUd]: <T extends FormItemType>(p: T) => string
+	[P in FormKeyTypeNoUd]: (p: StoreFiledType[P]) => string
 }
 
 export type InitDataType = {
-	[P in FormKeyTypeNoUd]: () => Omit<FormItemType, keyof FormFeild<FormKeyTypeNoUd>>
+	// Omit去除某些key
+	[P in FormKeyTypeNoUd]: () => Omit<StoreFiledType[P], keyof FormFeild<FormKeyTypeNoUd>>
 }

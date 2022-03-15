@@ -29,8 +29,13 @@ const routes: Array<RouteRecordRaw> = [
 		children: [
 			{
 				path: 'table',
-				name: 'dataTable',
+				name: 'data-table',
 				component: () => import(/* webpackChunkName: "dataTable" */ '../views/data/table.vue'),
+			},
+			{
+				path: 'graphql',
+				name: 'data-graphql',
+				component: () => import(/* webpackChunkName: "dataTable" */ '../views/data/graphql.vue'),
 			},
 		],
 	},

@@ -19,5 +19,8 @@ export default ({mode}) => {
 			}),
 		],
 		base: loadEnv(mode, process.cwd()).VITE_APP_BASE_URL,
+		define: {
+			'process.env': {},
+		},
 	})
 }

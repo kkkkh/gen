@@ -20,6 +20,7 @@
 			<el-sub-menu index="/data">
 				<template #title>data</template>
 				<el-menu-item index="/data/table">table</el-menu-item>
+				<el-menu-item index="/data/graphql">graphql</el-menu-item>
 			</el-sub-menu>
 		</el-menu>
 	</div>
@@ -39,7 +40,6 @@ const handleSelect = (key: string) => {
 	font-family: Avenir, Helvetica, Arial, sans-serif;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
-	text-align: center;
 	color: #2c3e50;
 	/* margin-top: 60px; */
 }

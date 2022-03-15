@@ -12,11 +12,11 @@
 		"lib": ["esnext", "dom"],
 		"skipLibCheck": true,
 		"allowSyntheticDefaultImports": true,
-		"types": ["vite/client"],
+		"types": ["vite/client","element-plus/global"],
 		"paths": {
 			"@/*": ["./src/*"]
 		},
-		"importHelpers": true
+		"importHelpers": true,
 	},
 	"include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"],
 	"exclude": ["node_modules"]

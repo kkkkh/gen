@@ -52,13 +52,13 @@ export const genComponent: GenComponentType = {
 		return inputModel
 	},
 	radio: (val) => {
-		const option = val._option ? val._option.split(/\s+/) : radio
+		const option = val?._option ? val._option.split(/\s+/) : radio
 		const str = option.map((val, index) => `<el-radio :label="${index}">${val}</el-radio>`).join('')
 		const inputModel = `<el-radio-group v-model="form.${val.field}">${str}</el-radio-group>`
 		return inputModel
 	},
 	textarea: (val) => {
-		const inputModel = `<el-input type="textarea" :row="${val._rows}" v-model="form.${val.field}" placeholder="请输入${val.label}" clearable :maxlength="${val._maxlength}" />`
+		const inputModel = `<el-input type="textarea" :rows="${val._rows}" v-model="form.${val.field}" placeholder="请输入${val.label}" clearable :maxlength="${val._maxlength}" />`
 		return inputModel
 	},
 	upload: (val) => {
