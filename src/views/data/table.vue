@@ -79,7 +79,7 @@ const genGraphqlHandle = () => {
         console.log(`${[1]}`);
         filedColumns.push({
             label: execRes[1],
-            prop: execRes[1],
+            prop: execRes[2],
             width: form.width,
         })
     }
