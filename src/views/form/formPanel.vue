@@ -3,7 +3,7 @@
     <div class="flex flex-col items-start">
       <config-form-drawer ref="configFormDrawer">
         <template #default>
-          <div>
+          <div class="ml-3">
             <el-tooltip effect="dark" content="add 增加" placement="top-start">
               <el-button @click="addHandle">add</el-button>
             </el-tooltip>
@@ -68,7 +68,7 @@
           <el-form-item v-if="'_multiple' in form" label="_multiple" prop="_multiple">
             <el-checkbox v-model="form._multiple"></el-checkbox>
           </el-form-item>
-          <el-form-item v-if="form._multiple" label="_limit" prop="_limit">
+          <el-form-item v-if="'_multiple' in form && form._multiple" label="_limit" prop="_limit">
             <el-input-number v-model="form._limit" clearable :max="100" :min="0"></el-input-number>
           </el-form-item>
         </div>
@@ -76,7 +76,7 @@
     </el-form>
     <div class="flex m-2 items-center">
       <span class="text-xs" v-if="storage.length">storage：</span>
-      <div class="relative mx-2 my-1" v-for="(item,index) in storage" :key="index">
+      <div class="relative mx-2 my-1" v-for="(item, index) in storage" :key="index">
         <el-icon
           class="absolute z-10 right-0 top-0 -mr-2 -mt-1 cursor-pointer text-red-600 hover:text-red-500"
           @click="deleteStorage(item.label, index)"

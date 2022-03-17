@@ -8,33 +8,33 @@ export type FormFeild<T> = {
 	_value: string
 }
 
-export type InputFeild<T> = FormFeild<T> & {
+export type InputFeild<T = FormKeyTypeNoUd> = FormFeild<T> & {
 	//
 }
 
-export type CheckboxFeild<T> = FormFeild<T> & {
+export type CheckboxFeild<T = FormKeyTypeNoUd> = FormFeild<T> & {
 	_message?: string
 }
 
-export type SelectFeild<T> = FormFeild<T> & {
+export type SelectFeild<T = FormKeyTypeNoUd> = FormFeild<T> & {
 	_option?: string
 }
 
-export type RadioFeild<T> = FormFeild<T> & {
+export type RadioFeild<T = FormKeyTypeNoUd> = FormFeild<T> & {
 	_option?: string
 }
-export type TextareaFeild<T> = FormFeild<T> & {
+export type TextareaFeild<T = FormKeyTypeNoUd> = FormFeild<T> & {
 	_rows?: number
 	_maxlength?: number
 }
-export type UploadFeild<T> = FormFeild<T> & {
+export type UploadFeild<T = FormKeyTypeNoUd> = FormFeild<T> & {
 	_multiple?: boolean
 	_limit?: number
 	_accept?: string
 	_size?: number
 }
 
-export type FeildType<T> =
+export type FeildType<T = FormKeyTypeNoUd> =
 	| InputFeild<T>
 	| CheckboxFeild<T>
 	| SelectFeild<T>

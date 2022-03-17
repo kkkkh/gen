@@ -8,6 +8,7 @@ export interface FormConfig {
 	class: string
 	_labelWidth: number
 	_scriptType: ScriptType
+	_columns: number
 }
 
 export type ConfigHandleType = {

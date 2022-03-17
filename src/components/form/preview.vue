@@ -8,11 +8,11 @@ const iframeDiv = ref();
 const iframe = ref();
 const props = defineProps({
     value: {
-        type: String,
+        type: String || Object,
         default: ""
     }
 })
-watch(() => props.value, (val: string) => {
+watch(() => props.value, (val: string | { head: string; body: string }) => {
     iframe.value.setHTML(val);
 })
 onMounted(() => {

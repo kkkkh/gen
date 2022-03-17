@@ -1,6 +1,7 @@
 import {GenScriptType, GenSetupItemType, SetupItemKeyType} from './../types/gen'
 import {GenSetupType, GenSetupReType} from './../types/gen'
 import {FormDataType, RulesTriggerEnum} from './../types/form'
+import {SelectFeild, UploadFeild} from './../types/field'
 import {select} from '@/data/word'
 
 const genSetUp: GenSetupType = (formList) => {
@@ -69,7 +70,7 @@ const genSetUpItem: GenSetupItemType = {
 		}
 	},
 	genSelect: (formList) => {
-		const selects = formList.filter((item) => item.type === 'select')
+		const selects: SelectFeild[] = formList.filter((item) => item.type === 'select')
 		let selectOption: GenSetupReType[] = []
 		if (selects.length > 0) {
 			selectOption = selects.map((item) => {
@@ -92,7 +93,7 @@ const genSetUpItem: GenSetupItemType = {
 		}
 	},
 	genUpload: (formList) => {
-		const uploads = formList.filter((item) => item.type === 'upload')
+		const uploads: UploadFeild[] = formList.filter((item) => item.type === 'upload')
 		let uploadVar: GenSetupReType[] = []
 		if (uploads.length > 0) {
 			uploadVar = uploads.map((item) => {

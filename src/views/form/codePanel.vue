@@ -63,6 +63,7 @@ const transformCode = (val: string) => {
     '<script src=//unpkg.com/vue@2.6.14/dist/vue.js><\/script>',
     '<script src=//unpkg.com/@vue/composition-api@1.4.9/dist/vue-composition-api.prod.js><\/script>',
     '<script src=//unpkg.com/element-ui@2.15.6/lib/index.js><\/script>',
+
     `<script>
       var exports = {};
       ${importsCompiled}
@@ -74,7 +75,8 @@ const transformCode = (val: string) => {
     `
   ]
   const css = [
-    '//unpkg.com/element-ui/lib/theme-chalk/index.css'
+    '//unpkg.com/element-ui@2.15.6/lib/theme-chalk/index.css',
+    '//unpkg.com/tailwindcss@2.2.19/dist/tailwind.min.css'
   ]
   const heads = css.map(val => `<link rel="stylesheet" href="${val}">`)
   previewCode.value = {

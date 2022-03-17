@@ -1,5 +1,5 @@
 <template>
-    <div class="flex w-full justify-between px-2 py-1">
+    <div class="flex w-full justify-end px-2 py-1">
         <el-tooltip effect="dark" content="form config" placement="top-start">
             <el-button type="primary" size="mini" @click="show">config</el-button>
         </el-tooltip>
@@ -15,7 +15,7 @@
                 <el-input v-model="configForm.model" placeholder clearable></el-input>
             </el-form-item>
             <el-form-item label="rules" prop="rules">
-                <el-input v-model="configForm.model" placeholder clearable></el-input>
+                <el-input v-model="configForm.rules" placeholder clearable></el-input>
             </el-form-item>
             <el-form-item label="class" prop="class">
                 <el-input v-model="configForm.class" placeholder clearable></el-input>
@@ -29,6 +29,9 @@
                     <el-option v-for="(item, index) in scriptOptions" :key="index" :value="item.value">{{ item.label }}</el-option>
                 </el-select>
             </el-form-item>
+            <el-form-item label="column" prop="_columns">
+                <el-input-number v-model="configForm._columns" :min="1" :max="3" clearable />
+            </el-form-item>
         </el-form>
     </el-drawer>
 </template>
@@ -37,7 +40,7 @@ import { ref, reactive } from "vue";
 import { configHandle } from "@/hooks/config";
 import { scriptOptions } from '@/data/options'
 
-const direction = ref('rtl')
+const direction = ref('ltr')
 
 const { visible, show, close, configForm } = configHandle()
 </script>
