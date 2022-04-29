@@ -6,9 +6,12 @@ export interface FormConfig {
 	model: string
 	rules: string
 	class: string
+	size: string
+	_isBtn: boolean
 	_labelWidth: number
 	_scriptType: ScriptType
 	_columns: number
+	_globalDisabled: boolean
 }
 
 export type ConfigHandleType = {

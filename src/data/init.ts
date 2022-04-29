@@ -6,7 +6,8 @@ export const initData: InitDataType = {
 	},
 	checkbox: () => {
 		return {
-			_message: '',
+			_option: '',
+			// _message: '',
 		}
 	},
 	select: () => ({_option: ''}),
@@ -15,7 +16,7 @@ export const initData: InitDataType = {
 	}),
 	textarea: () => ({
 		_rows: 2,
-		_maxlength: 200,
+		_maxlength: 1000,
 	}),
 	upload: () => ({
 		_multiple: false,
@@ -23,4 +24,13 @@ export const initData: InitDataType = {
 		_accept: '.png,.jpg,.rar,.zip,.doc,.docx,.pdf,.xls,.xlsx',
 		_size: 1,
 	}),
+	inputNumber: () => ({
+		_max: 100000,
+		_min: 0,
+		_step: 1,
+		_controlsPosition: 'right',
+	}),
+	datePicker: () => {
+		return {}
+	},
 }

@@ -2,28 +2,23 @@ import {GenScriptType, GenSetupItemType, SetupItemKeyType} from './../types/gen'
 import {GenSetupType, GenSetupReType} from './../types/gen'
 import {FormDataType, RulesTriggerEnum} from './../types/form'
 import {SelectFeild, UploadFeild} from './../types/field'
-import {select} from '@/data/word'
+import {select, checkbox} from '@/data/word'
+import {configHandle} from '@/hooks/config'
+const {configForm} = configHandle()
 
-const genSetUp: GenSetupType = (formList) => {
-	const keys = Object.keys(genSetUpItem) as SetupItemKeyType[]
-	const val = keys.map((key: SetupItemKeyType) => genSetUpItem[key](formList))
-	return val.reduce((pre, next) => {
-		return {
-			values: `${pre.values}\n${next.values}`,
-			vars: `${pre.vars}\n${next.vars}`,
-		}
-	})
-}
 export const genScript: GenScriptType = {
 	vue2x: (formList) => {
 		const {values, vars} = genSetUp(formList)
+		const {values: dValues, vars: dVars} = genDisabled()
 		return `<script>
-                import {defineComponent, reactive} from '@vue/composition-api'
+                import {defineComponent, reactive,ref} from '@vue/composition-api'
                 export default defineComponent({
                     setup (props, ctx) {
                         ${values}
+						${dValues}
                         return {
 							${vars}
+							${dVars}
                         }
                     }
                 })
@@ -31,6 +26,7 @@ export const genScript: GenScriptType = {
 	},
 	vue3x: (formList) => {
 		const {values} = genSetUp(formList)
+		const {values: dValues} = genDisabled()
 		return `
 		<script lang="ts">
 			export default {
@@ -38,12 +34,35 @@ export const genScript: GenScriptType = {
 			}
 		</script>
 		<script lang="ts" setup>
-			import {reactive} from 'vue'
+			import {reactive,ref} from 'vue'
 			${values}
+			${dValues}
         </script>`
 	},
 }
+const genDisabled = () => {
+	let vars = ''
+	let values = ''
+	if (configForm._globalDisabled) {
+		values = `const disabled = ref(true)`
+		vars = `disabled,`
+	}
+	return {
+		vars,
+		values,
+	}
+}
+const genSetUp: GenSetupType = (formList) => {
+	const keys = Object.keys(genSetUpItem) as SetupItemKeyType[]
+	const val = keys.map((key: SetupItemKeyType) => genSetUpItem[key](formList))
 
+	return val.reduce((pre, next) => {
+		return {
+			values: `${pre.values}\n${next.values}`,
+			vars: `${pre.vars}\n${next.vars}`,
+		}
+	})
+}
 const genSetUpItem: GenSetupItemType = {
 	genForm: (formList) => {
 		const form: FormDataType = {}
@@ -69,16 +88,39 @@ const genSetUpItem: GenSetupItemType = {
 			vars: 'rules,',
 		}
 	},
+	genCheckbox(formList) {
+		const checkboxs: SelectFeild[] = formList.filter((item) => item.type === 'checkbox')
+		let checkboxOption: GenSetupReType[] = []
+		if (checkboxs.length > 0) {
+			checkboxOption = checkboxs.map((item) => {
+				const option = item._option ? item._option.split(/\s+/) : checkbox
+				const arr = option.map((val, index) => {
+					return {
+						label: val,
+						value: index + 1,
+					}
+				})
+				return {
+					values: `const ${item.field}Options = ${JSON.stringify(arr)}`,
+					vars: `${item.field}Options,`,
+				}
+			})
+		}
+		return {
+			vars: checkboxOption.map((item) => item.vars).join('\n'),
+			values: checkboxOption.map((item) => item.values).join('\n'),
+		}
+	},
 	genSelect: (formList) => {
 		const selects: SelectFeild[] = formList.filter((item) => item.type === 'select')
 		let selectOption: GenSetupReType[] = []
 		if (selects.length > 0) {
 			selectOption = selects.map((item) => {
 				const option = item._option ? item._option.split(/\s+/) : select
-				const arr = option.map((val, index) => {
+				const arr = option.map((val) => {
 					return {
 						label: val,
-						value: index,
+						value: val,
 					}
 				})
 				return {
@@ -111,8 +153,8 @@ const genSetUpItem: GenSetupItemType = {
 							}
 							const ${beforeUpload} = (file)=>{
 								const files = file.name.split(".")
-								const type = filters.length > 0 ? filters[filters.length-1]:*
-								const isType = ${item.field}Accept.includes(file.type);
+								const type = files.length > 0 ? files[files.length-1]:'*'
+								const isType = ${item.field}Accept.includes(type);
 								if (!isType) {
 									this.$message.error('文件格式不正确');
 								}

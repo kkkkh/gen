@@ -6,6 +6,7 @@ export type FormFeild<T> = {
 	label: string
 	_required: boolean
 	_value: string
+	_disabled?: boolean
 }
 
 export type InputFeild<T = FormKeyTypeNoUd> = FormFeild<T> & {
@@ -14,6 +15,7 @@ export type InputFeild<T = FormKeyTypeNoUd> = FormFeild<T> & {
 
 export type CheckboxFeild<T = FormKeyTypeNoUd> = FormFeild<T> & {
 	_message?: string
+	_option?: string
 }
 
 export type SelectFeild<T = FormKeyTypeNoUd> = FormFeild<T> & {
@@ -33,6 +35,15 @@ export type UploadFeild<T = FormKeyTypeNoUd> = FormFeild<T> & {
 	_accept?: string
 	_size?: number
 }
+export type InputNumberFeild<T = FormKeyTypeNoUd> = FormFeild<T> & {
+	_min?: number
+	_max?: number
+	_step?: number
+	_controlsPosition?: string
+}
+export type DatePickerFeild<T = FormKeyTypeNoUd> = FormFeild<T> & {
+	//
+}
 
 export type FeildType<T = FormKeyTypeNoUd> =
 	| InputFeild<T>
@@ -41,6 +52,9 @@ export type FeildType<T = FormKeyTypeNoUd> =
 	| RadioFeild<T>
 	| TextareaFeild<T>
 	| UploadFeild<T>
+	| UploadFeild<T>
+	| InputNumberFeild<T>
+	| DatePickerFeild<T>
 
 export type StoreFiledType<T = FormKeyTypeNoUd> = {
 	input: InputFeild<T>
@@ -49,6 +63,8 @@ export type StoreFiledType<T = FormKeyTypeNoUd> = {
 	radio: RadioFeild<T>
 	textarea: TextareaFeild<T>
 	upload: UploadFeild<T>
+	inputNumber: InputNumberFeild<T>
+	datePicker: DatePickerFeild<T>
 }
 
 // export type FormListType = Array<InputFeild | CheckboxFeild | SelectFeild>

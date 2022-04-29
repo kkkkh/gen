@@ -7,9 +7,12 @@ export const defaultConfig: FormConfig = {
 	model: 'form',
 	rules: 'rules',
 	class: 'gen-el-form',
+	size: 'mini',
+	_isBtn: true,
 	_labelWidth: 100,
 	_scriptType: 'vue2x',
 	_columns: 1,
+	_globalDisabled: false,
 }
 
 export const getField = (): FormFeild<FormKeyType> => ({
@@ -18,4 +21,5 @@ export const getField = (): FormFeild<FormKeyType> => ({
 	label: '',
 	_required: false,
 	_value: '',
+	// _disabled: true,
 })

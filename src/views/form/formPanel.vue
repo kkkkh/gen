@@ -1,5 +1,6 @@
 <template>
   <div class="gen-form">
+    <!-- config -->
     <div class="flex flex-col items-start">
       <config-form-drawer ref="configFormDrawer">
         <template #default>
@@ -14,28 +15,26 @@
         </template>
       </config-form-drawer>
     </div>
+    <!-- form -->
     <el-form ref="elFormRef" label-width="80px" size="mini" :model="ruleForm">
       <div class="flex flex-col p-4 bg-gray-500 odd:bg-gray-900" v-for="(form, index) in ruleForm" :key="index">
         <div class="flex items-start">
-          <el-form-item label="field" prop="field">
-            <el-input v-model="form.field" clearable></el-input>
-          </el-form-item>
           <el-form-item label="label" prop="label">
             <el-input v-model="form.label" clearable></el-input>
           </el-form-item>
-          <el-form-item
-            label="type"
-            :prop="`${index}.type`"
-            :rules="[
-              {
-                required: true,
-                message: '请输入type',
-                trigger: 'change',
-              },
-            ]"
-          >
+          <el-form-item label="field" prop="field">
+            <el-input v-model="form.field" clearable></el-input>
+          </el-form-item>
+          <el-form-item label="type" :prop="`${index}.type`" :rules="[
+            {
+              required: true,
+              message: '请输入type',
+              trigger: 'change',
+            },
+          ]">
             <el-select v-model="form.type" clearable @change="(type: any) => typeChange(type, index)">
-              <el-option v-for="(item, index) in typeOptions" :key="index" :value="item.value">{{ item.label }}</el-option>
+              <el-option v-for="(item, index) in typeOptions" :key="index" :value="item.value">{{ item.label }}
+              </el-option>
             </el-select>
           </el-form-item>
           <el-button class="ml-4" v-if="index !== 0" type="danger" :icon="Delete" @click="delHandle(index)"></el-button>
@@ -71,16 +70,32 @@
           <el-form-item v-if="'_multiple' in form && form._multiple" label="_limit" prop="_limit">
             <el-input-number v-model="form._limit" clearable :max="100" :min="0"></el-input-number>
           </el-form-item>
+          <el-form-item v-if="'_min' in form" label="_min" prop="_min">
+            <el-input-number v-model="form._min" clearable :max="100" :min="0"></el-input-number>
+          </el-form-item>
+          <el-form-item v-if="'_max' in form" label="_max" prop="_max">
+            <el-input-number v-model="form._max" clearable :max="1000000" :min="0"></el-input-number>
+          </el-form-item>
+          <el-form-item v-if="'_step' in form" label="_step" prop="_step">
+            <el-input-number v-model="form._step" clearable :max="1000" :min="0"></el-input-number>
+          </el-form-item>
+          <el-form-item v-if="'_controlsPosition' in form" label="_controlsPosition" prop="_controlsPosition">
+            <el-select v-model="form._controlsPosition" placeholder>
+              <el-option v-for="item in controlsPositionOptions" :key="item.value" :value="item.value">{{ item.label }}
+              </el-option>
+            </el-select>
+          </el-form-item>
         </div>
       </div>
     </el-form>
+    <!-- btn -->
+    <btn-config v-model:value="btns"></btn-config>
+    <!-- store -->
     <div class="flex m-2 items-center">
       <span class="text-xs" v-if="storage.length">storage：</span>
       <div class="relative mx-2 my-1" v-for="(item, index) in storage" :key="index">
-        <el-icon
-          class="absolute z-10 right-0 top-0 -mr-2 -mt-1 cursor-pointer text-red-600 hover:text-red-500"
-          @click="deleteStorage(item.label, index)"
-        >
+        <el-icon class="absolute z-10 right-0 top-0 -mr-2 -mt-1 cursor-pointer text-red-600 hover:text-red-500"
+          @click="deleteStorage(item.label, index)">
           <circle-close-filled />
         </el-icon>
         <el-button @click="viewStorage(index)">{{ item.label }}</el-button>
@@ -95,7 +110,7 @@ export default {
 </script>
 <script lang="ts" setup>
 import { ref } from 'vue'
-import { typeOptions } from '@/data/options'
+import { typeOptions, controlsPositionOptions } from '@/data/options'
 import { genTemplete } from '@/model/templete'
 import { FeildType, FormListType } from '@/types/field'
 import { initData } from '@/data/init'
@@ -107,6 +122,7 @@ import { prettierFormat } from '@/utils/format'
 import { configHandle, setConfigForm } from "@/hooks/config"
 import ConfigFormDrawer from '@/components/form/configFormDrawer.vue'
 import { storageHandle } from '@/hooks/storage'
+import BtnConfig from '@/components/form/btnConfig.vue'
 
 defineProps<{
   code: string
@@ -127,10 +143,9 @@ const viewStorage = (index: number) => {
   setConfigForm(storageValue.configForm)
   viewCodeHandle()
 }
-
 const viewCodeHandle = () => {
   // debugger
-  const code = genTemplete(configForm, ruleForm.value as FormListType)
+  const code = genTemplete(configForm, ruleForm.value as FormListType, btns.value)
   const formatCode = prettierFormat(code)
   emits('update:code', formatCode)
 }
@@ -165,6 +180,7 @@ const typeChange = (key: FormKeyType, index: number) => {
 const addHandle = () => {
   ruleForm.value.push(getField())
 }
+const btns = ref([{ value: '取消' }, { value: '保存', type: 'primary' }])
 
 </script>
 <style>

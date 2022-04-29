@@ -1,14 +1,7 @@
 <template>
     <el-form ref="genElForm" :model="form" :rules="rules" label-width="100px" class="gen-form">
         <el-form-item label="var-code" prop="varCode">
-            <el-input
-                type="textarea"
-                :rows="6"
-                v-model="form.varCode"
-                placeholder="请输入var-code"
-                clearable
-                :maxlength="1000"
-            />
+            <el-input type="textarea" :rows="6" v-model="form.varCode" placeholder="请输入var-code" clearable />
         </el-form-item>
         <el-form-item label="apiAlias" prop="apiAlias">
             <el-select v-model="form.apiAlias" placeholder="请选择apiAlias" clearable>
@@ -17,37 +10,16 @@
             <el-button class="ml-2" @click="genVarCodeValue">gen Var</el-button>
         </el-form-item>
         <el-form-item prop="varCodeValue">
-            <el-input
-                type="textarea"
-                :rows="6"
-                v-model="form.varCodeValue"
-                placeholder="请输入"
-                clearable
-                :maxlength="1000"
-            />
+            <el-input type="textarea" :rows="6" v-model="form.varCodeValue" placeholder="请输入" clearable />
         </el-form-item>
         <el-form-item label="field-code" prop="fieldCode">
-            <el-input
-                type="textarea"
-                :rows="6"
-                v-model="form.fieldCode"
-                placeholder="请输入field-code"
-                clearable
-                :maxlength="1000"
-            />
+            <el-input type="textarea" :rows="6" v-model="form.fieldCode" placeholder="请输入field-code" clearable />
         </el-form-item>
         <el-form-item>
             <el-button @click="genFieldCodeValue">gen Var</el-button>
         </el-form-item>
         <el-form-item prop="fieldCodeValue">
-            <el-input
-                type="textarea"
-                :rows="6"
-                v-model="form.fieldCodeValue"
-                placeholder="请输入"
-                clearable
-                :maxlength="1000"
-            />
+            <el-input type="textarea" :rows="6" v-model="form.fieldCodeValue" placeholder="请输入" clearable />
         </el-form-item>
     </el-form>
 </template>
@@ -67,7 +39,7 @@ const form = reactive({
     "varCodeValue": "",
     "fieldCode": '',
     "fieldCodeValue": "",
-    apiAlias: "data"
+    apiAlias: "result"
 })
 const rules = {
     'varCode': [
@@ -77,7 +49,7 @@ const rules = {
         { 'required': true, 'message': '请输入field-code', 'trigger': 'blur' },
     ],
 }
-const apiAliasOptions = [{ "label": "data", "value": "data" }]
+const apiAliasOptions = [{ "label": "result", "value": "result" }]
 
 const genVarCodeValue = () => {
     genElForm.value.validateField('varCode', (isValid: string) => {
