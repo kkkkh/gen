@@ -180,7 +180,7 @@ const typeChange = (key: FormKeyType, index: number) => {
 const addHandle = () => {
   ruleForm.value.push(getField())
 }
-const btns = ref([{ value: '取消' }, { value: '保存', type: 'primary' }])
+const btns = ref([{ value: '取消',eventMethodName:'cancel' }, { value: '保存', type: 'primary', eventMethodName:'save' }])
 
 </script>
 <style>

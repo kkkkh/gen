@@ -7,7 +7,7 @@ import {genFormModel} from './form'
 
 export const genTemplete = (formConfig: FormConfig = defaultConfig, formList: FormListType, btnList: BtnListType) => {
 	const htmlStr = genFormModel(formConfig, formList, btnList)
-	const scriptStr = genScript[formConfig._scriptType](formList)
+	const scriptStr = genScript[formConfig._scriptType](formList, btnList)
 	return `${htmlStr}
             ${scriptStr}`
 }

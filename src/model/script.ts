@@ -1,3 +1,4 @@
+import {BtnListType} from '@/types/btn'
 import {GenScriptType, GenSetupItemType, SetupItemKeyType} from './../types/gen'
 import {GenSetupType, GenSetupReType} from './../types/gen'
 import {FormDataType, RulesTriggerEnum} from './../types/form'
@@ -7,38 +8,79 @@ import {configHandle} from '@/hooks/config'
 const {configForm} = configHandle()
 
 export const genScript: GenScriptType = {
-	vue2x: (formList) => {
+	vue2x: (formList, btnList) => {
 		const {values, vars} = genSetUp(formList)
+		const {values: refValues, vars: refVars} = genRef()
 		const {values: dValues, vars: dVars} = genDisabled()
+		const {values: bValues, vars: bVars} = genBtnEventMethod(btnList)
+
 		return `<script>
                 import {defineComponent, reactive,ref} from '@vue/composition-api'
                 export default defineComponent({
                     setup (props, ctx) {
+						${refValues}
                         ${values}
 						${dValues}
+						${bValues}
                         return {
+							${refVars}
 							${vars}
 							${dVars}
+							${bVars}
                         }
                     }
                 })
             </script>`
 	},
-	vue3x: (formList) => {
+	vue3x: (formList, btnList) => {
 		const {values} = genSetUp(formList)
+		const {values: refValues} = genRef()
 		const {values: dValues} = genDisabled()
+		const {values: bValues} = genBtnEventMethod(btnList)
 		return `
 		<script lang="ts">
 			export default {
-			name: 'gen-form',
+				name: 'gen-form',
 			}
 		</script>
 		<script lang="ts" setup>
 			import {reactive,ref} from 'vue'
+			${refValues}
 			${values}
 			${dValues}
+			${bValues}
         </script>`
 	},
+}
+const genRef = () => {
+	return {
+		values: `const ${configForm.ref} = ref()`,
+		vars: `${configForm.ref},`,
+	}
+}
+const genValidate = () => {
+	return `${configForm.ref}.value.validate((res)=>{
+		if(res){
+		}
+	})`
+}
+const genBtnEventMethod = (btnList: BtnListType) => {
+	let vars = ''
+	let values = ''
+	if (configForm._isBtn) {
+		values = btnList
+			.map((item, index) => {
+				return `const ${item.eventMethodName} = () => {
+					${index === 1 ? genValidate() : ''}
+				}`
+			})
+			.join('\n')
+		vars = btnList.map((item) => `${item.eventMethodName},`).join('\n')
+	}
+	return {
+		vars,
+		values,
+	}
 }
 const genDisabled = () => {
 	let vars = ''
@@ -55,7 +97,6 @@ const genDisabled = () => {
 const genSetUp: GenSetupType = (formList) => {
 	const keys = Object.keys(genSetUpItem) as SetupItemKeyType[]
 	const val = keys.map((key: SetupItemKeyType) => genSetUpItem[key](formList))
-
 	return val.reduce((pre, next) => {
 		return {
 			values: `${pre.values}\n${next.values}`,

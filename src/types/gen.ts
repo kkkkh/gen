@@ -1,8 +1,11 @@
-import {checkbox} from './../data/word'
+// import {checkbox} from './../data/word'
 import {FormListType} from './field'
 import {ScriptType} from './config'
+// import {FormConfig} from '../types/config'
+import {BtnListType} from '@/types/btn'
 export type GenScriptType = {
-	[P in ScriptType]: (formList: FormListType) => string
+	// [P in ScriptType]: (formList: FormListType) => string
+	[P in ScriptType]: (formList: FormListType, btnList: BtnListType) => string
 }
 
 export type GenSetupReType = {vars: string; values: string}

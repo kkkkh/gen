@@ -24,9 +24,10 @@ export const genFormModel = (formConfig: FormConfig = defaultConfig, formList: F
 	return formModel
 }
 const genFormBtn = (btnList: BtnListType) => {
-	const btn = btnList.map((item) => {
+	const btn = btnList.map((item, index) => {
 		const type = item.type ? `type='${item.type}'` : ''
-		return `<el-button ${type}>${item.value}</el-button>`
+		const click = item.eventMethodName ? `@click="${item.eventMethodName}"` : ''
+		return `<el-button ${type} ${click}>${item.value}</el-button>`
 	})
 	const btnModel = `<el-form-item label-width="0px">
 	<div class="flex justify-center">${btn.join('')} </div>
