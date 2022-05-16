@@ -2,21 +2,23 @@ import {BtnListType} from '@/types/btn'
 import {GenScriptType, GenSetupItemType, SetupItemKeyType} from './../types/gen'
 import {GenSetupType, GenSetupReType} from './../types/gen'
 import {FormDataType, RulesTriggerEnum} from './../types/form'
-import {SelectFeild, UploadFeild} from './../types/field'
+import {FormListType, SelectFeild, UploadFeild} from './../types/field'
 import {select, checkbox} from '@/data/word'
 import {configHandle} from '@/hooks/config'
+import {genComponents} from './components'
 const {configForm} = configHandle()
-
 export const genScript: GenScriptType = {
 	vue2x: (formList, btnList) => {
 		const {values, vars} = genSetUp(formList)
 		const {values: refValues, vars: refVars} = genRef()
 		const {values: dValues, vars: dVars} = genDisabled()
 		const {values: bValues, vars: bVars} = genBtnEventMethod(btnList)
-
+		const {components, importComponents} = genComponents(formList)
 		return `<script>
                 import {defineComponent, reactive,ref} from '@vue/composition-api'
+				${importComponents}
                 export default defineComponent({
+					${components}
                     setup (props, ctx) {
 						${refValues}
                         ${values}
@@ -37,6 +39,7 @@ export const genScript: GenScriptType = {
 		const {values: refValues} = genRef()
 		const {values: dValues} = genDisabled()
 		const {values: bValues} = genBtnEventMethod(btnList)
+		const {importComponents} = genComponents(formList)
 		return `
 		<script lang="ts">
 			export default {
@@ -45,6 +48,7 @@ export const genScript: GenScriptType = {
 		</script>
 		<script lang="ts" setup>
 			import {reactive,ref} from 'vue'
+			${importComponents}
 			${refValues}
 			${values}
 			${dValues}
@@ -52,6 +56,7 @@ export const genScript: GenScriptType = {
         </script>`
 	},
 }
+
 const genRef = () => {
 	return {
 		values: `const ${configForm.ref} = ref()`,

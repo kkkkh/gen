@@ -5,9 +5,7 @@
       <config-form-drawer ref="configFormDrawer">
         <template #default>
           <div class="ml-3">
-            <el-tooltip effect="dark" content="add 增加" placement="top-start">
-              <el-button @click="addHandle">add</el-button>
-            </el-tooltip>
+            <add-form @number="addHandle"></add-form>
             <el-tooltip effect="dark" content="gen 生成" placement="top-start">
               <el-button @click="genHandle">gen</el-button>
             </el-tooltip>
@@ -52,12 +50,12 @@
           <el-form-item v-if="'_option' in form" label="_option" prop="_option">
             <el-input v-model="form._option" clearable></el-input>
           </el-form-item>
-          <el-form-item v-if="'_rows' in form" label="_rows" prop="_rows">
+          <!-- <el-form-item v-if="'_rows' in form" label="_rows" prop="_rows">
             <el-input-number v-model="form._rows" clearable></el-input-number>
           </el-form-item>
           <el-form-item v-if="'_maxlength' in form" label="_maxlength" prop="_maxlength">
             <el-input-number v-model="form._maxlength" clearable></el-input-number>
-          </el-form-item>
+          </el-form-item> -->
           <el-form-item v-if="'_size' in form" label="_size(MB)" prop="_size">
             <el-input-number v-model="form._size" clearable :max="100" :min="0"></el-input-number>
           </el-form-item>
@@ -91,7 +89,7 @@
     <!-- btn -->
     <btn-config v-model:value="btns"></btn-config>
     <!-- store -->
-    <div class="flex m-2 items-center">
+    <div class="flex m-2 items-center flex-wrap">
       <span class="text-xs" v-if="storage.length">storage：</span>
       <div class="relative mx-2 my-1" v-for="(item, index) in storage" :key="index">
         <el-icon class="absolute z-10 right-0 top-0 -mr-2 -mt-1 cursor-pointer text-red-600 hover:text-red-500"
@@ -123,6 +121,7 @@ import { configHandle, setConfigForm } from "@/hooks/config"
 import ConfigFormDrawer from '@/components/form/configFormDrawer.vue'
 import { storageHandle } from '@/hooks/storage'
 import BtnConfig from '@/components/form/btnConfig.vue'
+import AddForm from '@/components/form/addForm.vue'
 
 defineProps<{
   code: string
@@ -177,8 +176,10 @@ const typeChange = (key: FormKeyType, index: number) => {
     ruleForm.value[index] = { ...dataForm }
   }
 }
-const addHandle = () => {
-  ruleForm.value.push(getField())
+const addHandle = (num:number) => {
+  for(let i = 0;i<num; i++){
+    ruleForm.value.push(getField())
+  }
 }
 const btns = ref([{ value: '取消',eventMethodName:'cancel' }, { value: '保存', type: 'primary', eventMethodName:'save' }])
 

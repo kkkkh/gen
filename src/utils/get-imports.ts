@@ -7,6 +7,7 @@ export default function (code: string, {imports}: {imports: ImportsType}) {
 		name: 'get-imports',
 		visitor: {
 			ImportDeclaration(path: NodePath<ImportDeclaration>) {
+				// debugger
 				imports.push({
 					variables: path.node.specifiers.map((spec) => {
 						if (isImportSpecifier(spec) && isIdentifier(spec.imported)) {
@@ -28,3 +29,4 @@ export default function (code: string, {imports}: {imports: ImportsType}) {
 		},
 	}
 }
+

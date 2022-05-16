@@ -14,7 +14,7 @@ export const genFormModel = (formConfig: FormConfig = defaultConfig, formList: F
 			:model="${formConfig.model}"
 			:rules="${formConfig.rules}"
 			size="${formConfig.size}"
-			label-width="${formConfig._labelWidth}px"
+			label-width="${formConfig.labelWidth}px"
 			class="${formConfig.class}"
 		>
 			${formItem}
@@ -105,10 +105,10 @@ export const genComponent: GenComponentType = {
 		const inputModel = `<el-radio-group v-model="form.${val.field}" ${disabled}>${str}</el-radio-group>`
 		return inputModel
 	},
-	textarea: (val) => {
-		const inputModel = `<el-input type="textarea" :rows="${val._rows}" v-model="form.${val.field}" placeholder="请输入${val.label}" clearable :maxlength="${val._maxlength}" ${disabled}/>`
-		return inputModel
-	},
+	// textarea: (val) => {
+	// 	const inputModel = `<el-input type="textarea" :rows="${val._rows}" v-model="form.${val.field}" placeholder="请输入${val.label}" clearable :maxlength="${val._maxlength}" ${disabled}/>`
+	// 	return inputModel
+	// },
 	upload: (val) => {
 		const inputModel = `<el-upload
 		action="/posts/"

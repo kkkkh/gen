@@ -14,10 +14,10 @@ export const initData: InitDataType = {
 	radio: () => ({
 		_option: '',
 	}),
-	textarea: () => ({
-		_rows: 2,
-		_maxlength: 1000,
-	}),
+	// textarea: () => ({
+	// 	_rows: 2,
+	// 	_maxlength: 1000,
+	// }),
 	upload: () => ({
 		_multiple: false,
 		_limit: 1,

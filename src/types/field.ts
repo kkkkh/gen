@@ -25,10 +25,10 @@ export type SelectFeild<T = FormKeyTypeNoUd> = FormFeild<T> & {
 export type RadioFeild<T = FormKeyTypeNoUd> = FormFeild<T> & {
 	_option?: string
 }
-export type TextareaFeild<T = FormKeyTypeNoUd> = FormFeild<T> & {
-	_rows?: number
-	_maxlength?: number
-}
+// export type TextareaFeild<T = FormKeyTypeNoUd> = FormFeild<T> & {
+// 	_rows?: number
+// 	_maxlength?: number
+// }
 export type UploadFeild<T = FormKeyTypeNoUd> = FormFeild<T> & {
 	_multiple?: boolean
 	_limit?: number
@@ -50,7 +50,7 @@ export type FeildType<T = FormKeyTypeNoUd> =
 	| CheckboxFeild<T>
 	| SelectFeild<T>
 	| RadioFeild<T>
-	| TextareaFeild<T>
+	// | TextareaFeild<T>
 	| UploadFeild<T>
 	| UploadFeild<T>
 	| InputNumberFeild<T>
@@ -61,7 +61,7 @@ export type StoreFiledType<T = FormKeyTypeNoUd> = {
 	checkbox: CheckboxFeild<T>
 	select: SelectFeild<T>
 	radio: RadioFeild<T>
-	textarea: TextareaFeild<T>
+	// textarea: TextareaFeild<T>
 	upload: UploadFeild<T>
 	inputNumber: InputNumberFeild<T>
 	datePicker: DatePickerFeild<T>

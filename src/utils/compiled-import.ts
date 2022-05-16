@@ -2,6 +2,7 @@ import {ImportsType} from '@/types/imports'
 
 const globalVar: {[name: string]: string} = {
 	'@vue/composition-api': 'VueCompositionAPI',
+	'element-ui': 'ELEMENT',
 }
 export default (imports: ImportsType): string => {
 	return imports

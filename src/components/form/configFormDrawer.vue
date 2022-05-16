@@ -25,7 +25,7 @@
             </el-form-item>
             <h3>prop</h3>
             <el-form-item label="labelWidth" prop="_labelWidth">
-                <el-input-number v-model="configForm._labelWidth" placeholder clearable></el-input-number>
+                <el-input-number v-model="configForm.labelWidth" placeholder clearable></el-input-number>
             </el-form-item>
             <el-form-item label="script" prop="_scriptType">
                 <el-select v-model="configForm._scriptType" clearable>
@@ -38,6 +38,9 @@
             </el-form-item>
             <el-form-item label="globalDisabled" prop="_globalDisabled">
                 <el-checkbox v-model="configForm._globalDisabled" />
+            </el-form-item>
+            <el-form-item label="components" prop="_components">
+                <el-checkbox v-model="configForm._components" />
             </el-form-item>
         </el-form>
     </el-drawer>

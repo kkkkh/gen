@@ -8,11 +8,12 @@ export const defaultConfig: FormConfig = {
 	rules: 'rules',
 	class: '',
 	size: 'mini',
+	labelWidth: 100,
 	_isBtn: true,
-	_labelWidth: 100,
 	_scriptType: 'vue2x',
 	_columns: 1,
 	_globalDisabled: false,
+	_components: false,
 }
 
 export const getField = (): FormFeild<FormKeyType> => ({
