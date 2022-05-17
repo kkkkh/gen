@@ -1,17 +1,19 @@
 <template>
   <!-- <div class="p-4 bg-gray-700 text-left relative" contenteditable readonly> -->
-  <div class="code-panel p-4 bg-gray-700 text-left relative">
-    <el-tabs v-model="active">
-      <el-tab-pane label="code" name="code">
-        <el-button class="absolute right-0 top-0 mr-2 mt-2 z-10" size="small" type="primary" @click="copyHandle">copy</el-button>
-        <code-eidt :value="code"></code-eidt>
-      </el-tab-pane>
-      <el-tab-pane label="preview" name="preview">
-        <div class="preview">
-          <preview :value="previewCode"></preview>
-        </div>
-      </el-tab-pane>
-    </el-tabs>
+  <div class="code-panel bg-gray-700 text-left relative">
+    <div class="p-2">
+      <el-tabs v-model="active">
+        <el-tab-pane label="code" name="code">
+          <el-button class="absolute right-0 top-0 mr-2 mt-2 z-10" size="small" type="primary" @click="copyHandle">copy</el-button>
+          <code-eidt :value="code"></code-eidt>
+        </el-tab-pane>
+        <el-tab-pane label="preview" name="preview">
+          <div class="preview">
+            <preview :value="previewCode"></preview>
+          </div>
+        </el-tab-pane>
+      </el-tabs>
+    </div>
   </div>
 </template>
 <script lang="ts">

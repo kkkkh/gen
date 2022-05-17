@@ -1,10 +1,4 @@
 <template>
-    <div class="flex w-full justify-end px-2 py-1">
-        <el-tooltip effect="dark" content="form config" placement="top-start">
-            <el-button type="primary" size="mini" @click="show">config</el-button>
-        </el-tooltip>
-        <slot></slot>
-    </div>
     <el-drawer v-model="visible" title="config" :direction="direction">
         <el-form class="text-left" label-width="100px" size="mini" :model="configForm">
             <h3>name</h3>
@@ -46,11 +40,12 @@
     </el-drawer>
 </template>
 <script setup lang="ts">
-import { ref, reactive } from "vue";
+import { ref } from "vue";
 import { configHandle } from "@/hooks/config";
 import { scriptOptions } from '@/data/options'
 
 const direction = ref('ltr')
-
 const { visible, show, close, configForm } = configHandle()
+
+defineExpose({show,close})
 </script>

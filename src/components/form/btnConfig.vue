@@ -7,10 +7,6 @@
         </el-select>
         <el-button class="ml-2" type="primary" :icon="Plus" circle @click="add" />
     </div>
-
-    <div class="flex">
-
-    </div>
 </template>
 <script setup lang="ts">
 import { ref, computed } from "vue";

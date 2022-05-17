@@ -1,20 +1,9 @@
 <template>
   <div class="gen-form">
     <!-- config -->
-    <div class="flex flex-col items-start">
-      <config-form-drawer ref="configFormDrawer">
-        <template #default>
-          <div class="ml-3">
-            <add-form @number="addHandle"></add-form>
-            <el-tooltip effect="dark" content="gen 生成" placement="top-start">
-              <el-button @click="genHandle">gen</el-button>
-            </el-tooltip>
-          </div>
-        </template>
-      </config-form-drawer>
-    </div>
+    <tool-bar @add="addHandle" @gen="genHandle"></tool-bar>
     <!-- form -->
-    <el-form ref="elFormRef" label-width="80px" size="mini" :model="ruleForm">
+    <el-form class="px-2" ref="elFormRef" label-width="80px" size="mini" :model="ruleForm">
       <div class="flex flex-col p-4 bg-gray-500 odd:bg-gray-900" v-for="(form, index) in ruleForm" :key="index">
         <div class="flex items-start">
           <el-form-item label="label" prop="label">
@@ -118,10 +107,9 @@ import { getField } from '@/data/default'
 import { Delete, CircleCloseFilled } from '@element-plus/icons'
 import { prettierFormat } from '@/utils/format'
 import { configHandle, setConfigForm } from "@/hooks/config"
-import ConfigFormDrawer from '@/components/form/configFormDrawer.vue'
 import { storageHandle } from '@/hooks/storage'
 import BtnConfig from '@/components/form/btnConfig.vue'
-import AddForm from '@/components/form/addForm.vue'
+import ToolBar from '@/components/form/toolBar.vue'
 
 defineProps<{
   code: string
