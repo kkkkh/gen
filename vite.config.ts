@@ -22,5 +22,8 @@ export default ({mode}) => {
 		define: {
 			'process.env': {},
 		},
+		server: {
+			port: 4000,
+		},
 	})
 }

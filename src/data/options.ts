@@ -1,4 +1,4 @@
-import {ScriptType} from './../types/config'
+import {ScriptType} from '@/types/config'
 import {FormOptionType, OptionType} from '../types/option'
 
 export const typeOptions: FormOptionType[] = [

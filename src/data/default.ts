@@ -10,7 +10,7 @@ export const defaultConfig: FormConfig = {
 	size: 'mini',
 	labelWidth: 100,
 	_isBtn: true,
-	_scriptType: 'vue2x',
+	_scriptType: 'vue3x',
 	_columns: 1,
 	_globalDisabled: false,
 	_components: false,
