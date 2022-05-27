@@ -26,6 +26,7 @@ const getComponents = (types: FormKeyTypeNoUd[]) => {
 	return eles.flat()
 }
 export const genComponents = (formList: FormListType) => {
+	debugger
 	let importComponents = ''
 	let components = ''
 	if (configForm._components) {
@@ -35,8 +36,8 @@ export const genComponents = (formList: FormListType) => {
 			componentsNames.push('Button')
 		}
 		const names = [...new Set(componentsNames)]
-		const asNames = names.map((name) => `${name} as El${name}`)
-		importComponents = `import {${asNames}} from ${ElementUIFrom[configForm._scriptType]}`
+		const asNames = names.map((name) => (configForm._scriptType === 'vue3x' ? `El${name}` : `${name} as El${name}`))
+		importComponents = `import {${asNames}} from '${ElementUIFrom[configForm._scriptType]}'`
 		components = `components:{
 			${names.map((name) => `El${name}`).join(',\n')}
 		},`

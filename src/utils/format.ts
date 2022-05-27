@@ -1,7 +1,9 @@
 import {ParserType, ParseHandleType} from '@/types/format'
-import prettier from 'https://unpkg.com/prettier@2.5.1/esm/standalone.mjs'
-import parserHtml from 'https://unpkg.com/prettier@2.5.1/esm/parser-html.mjs'
-import parserBabel from 'https://unpkg.com/prettier@2.5.1/esm/parser-babel.mjs'
+import prettier from 'https://unpkg.com/prettier@2.6.2/esm/standalone.mjs'
+import parserHtml from 'https://unpkg.com/prettier@2.6.2/esm/parser-html.mjs'
+import parserBabel from 'https://unpkg.com/prettier@2.6.2/esm/parser-babel.mjs'
+import parserTs from 'https://unpkg.com/prettier@2.6.2/esm/parser-typescript.mjs'
+
 export const prettierFormat = (code: string, parserType: ParserType = 'vue') => {
 	return parserHandle[parserType](code)
 }
@@ -10,7 +12,7 @@ const parserHandle: ParseHandleType = {
 	vue: (code: string) => {
 		return prettier.format(code, {
 			parser: 'vue',
-			plugins: [parserBabel, parserHtml],
+			plugins: [parserBabel, parserHtml, parserTs],
 			arrowParens: 'avoid',
 			bracketSameLine: true,
 			bracketSpacing: false,

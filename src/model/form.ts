@@ -30,7 +30,7 @@ const genFormBtn = (btnList: BtnListType) => {
 		return `<el-button ${type} ${click}>${item.value}</el-button>`
 	})
 	const btnModel = `<el-form-item label-width="0px">
-	<div class="flex justify-center">${btn.join('')} </div>
+	<div class="flex justify-center w-full">${btn.join('')} </div>
 	</el-form-item>`
 	return btnModel
 }

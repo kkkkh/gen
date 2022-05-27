@@ -10,6 +10,9 @@
 	},
 	"dependencies": {
 		"@babel/types": "^7.16.8",
+		"@codemirror/lang-html": "^0.20.0",
+		"@codemirror/lang-javascript": "^0.20.0",
+		"@codemirror/theme-one-dark": "^0.20.0",
 		"@element-plus/icons": "^0.0.11",
 		"@emmetio/codemirror-plugin": "^1.2.4",
 		"@types/babel__standalone": "^7.1.4",
@@ -20,6 +23,7 @@
 		"element-plus": "^1.2.0-beta.3",
 		"lodash": "^4.17.21",
 		"vue": "^3.2.16",
+		"vue-codemirror": "^5.0.1",
 		"vue-router": "^4.0.12",
 		"vue-template-compiler": "^2.6.14"
 	},

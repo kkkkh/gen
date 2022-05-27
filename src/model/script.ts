@@ -39,16 +39,17 @@ export const genScript: GenScriptType = {
 		const {values: refValues} = genRef()
 		const {values: dValues} = genDisabled()
 		const {values: bValues} = genBtnEventMethod(btnList)
-		const {importComponents} = genComponents(formList)
+		const {importComponents, components} = genComponents(formList)
 		return `
 		<script lang="ts">
+			${importComponents}
 			export default {
 				name: 'gen-form',
+				${components}
 			}
 		</script>
 		<script lang="ts" setup>
 			import {reactive,ref} from 'vue'
-			${importComponents}
 			${refValues}
 			${values}
 			${dValues}
@@ -90,6 +91,7 @@ const genBtnEventMethod = (btnList: BtnListType) => {
 const genDisabled = () => {
 	let vars = ''
 	let values = ''
+	debugger
 	if (configForm._globalDisabled) {
 		values = `const disabled = ref(true)`
 		vars = `disabled,`

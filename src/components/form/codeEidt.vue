@@ -1,72 +1,36 @@
 <template>
-    <div class="code-edit">
-        <textarea ref="codeEidt" :value="value"></textarea>
-    </div>
+    <codemirror
+        v-model="code"
+        placeholder="Code goes here..."
+        :style="{ height: '600px' }"
+        :autofocus="true"
+        :indent-with-tab="true"
+        :tabSize="2"
+        :extensions="extensions"
+        @ready="log('ready', $event)"
+        @change="log('change', $event)"
+        @focus="log('focus', $event)"
+        @blur="log('blur', $event)"
+    />
 </template>
 <script setup lang="ts">
-import CodeMirror from 'codemirror';
-import emmet from '@emmetio/codemirror-plugin';
-import 'codemirror/lib/codemirror.css';
-import 'codemirror/theme/lucario.css';
-import 'codemirror/addon/selection/active-line';
-import 'codemirror/addon/edit/matchbrackets';
-import 'codemirror/mode/vue/vue';
-import { ref, watch, nextTick } from "vue";
-emmet(CodeMirror);
+import { Codemirror } from 'vue-codemirror'
+import { html } from '@codemirror/lang-html'
+import { javascript } from '@codemirror/lang-javascript'
+import { oneDark } from '@codemirror/theme-one-dark'
+import { ref, watch } from "vue";
 const props = defineProps({
     value: {
         type: String,
         default: () => ''
     },
-    options: {
-        type: Object,
-        default: () => ({})
-    }
 });
-const codeEidt = ref();
-const DEFAULT_OPTIONS = {
-    // lineNumbers: true,
-    // mode: 'text/x-vue',
-    // theme: 'material',
-    // tabSize: 2,
-    mode: 'vue',
-    theme: 'lucario',
-    value: `<template></template>`,
-    lineNumbers: true,
-    tabSize: 2,
-    autofocus: true,
-    line: true,
-    styleActiveLine: true,
-    matchBrackets: true,
-    extraKeys: {
-        Tab: 'emmetExpandAbbreviation',
-        Enter: 'emmetInsertLineBreak'
-    }
-}
-const currentOptions = Object.assign({}, DEFAULT_OPTIONS, props.options)
-
-const editor = ref()
-// debugger
-nextTick(() => {
-    editor.value = CodeMirror.fromTextArea(codeEidt.value, currentOptions)
-})
+const code = ref('')
+const extensions = [javascript(),html(), oneDark]
 watch(() => props.value, (val: string) => {
-    val !== editor.value.getValue() && editor.value.setValue(val)
+    code.value = val
 })
-
-</script>
-<style lang="scss">
-// @import "codemirror/lib/codemirror.css";
-// @import "codemirror/theme/material.css";
-.code-edit {
-    width: 100%;
-    height: 600px;
-    line-height: 1.2em;
-    overflow: auto;
-    .CodeMirror {
-        border: 1px solid black;
-        height: 100%;
-        line-height: 1.2rem;
-    }
+const log = (type:string,event:unknown)=>{
+    console.log(type,event)
 }
-</style>
+</script>
