@@ -100,7 +100,7 @@ export const genComponent: GenComponentType = {
 		// return inputModel
 	},
 	radio: (val) => {
-		const option = val?._option ? val._option.split(/\s+/) : radio
+		const option = val?.attrs._option ? val.attrs._option.split(/\s+/) : radio
 		const str = option.map((val, index) => `<el-radio :label="${index}">${val}</el-radio>`).join('')
 		const inputModel = `<el-radio-group v-model="form.${val.field}" ${disabled}>${str}</el-radio-group>`
 		return inputModel
@@ -115,24 +115,24 @@ export const genComponent: GenComponentType = {
 		:on-success="${val.field}HandleSuccess"
 		:before-upload="${val.field}BeforeUpload"
 		:on-remove="${val.field}HandleRemove"
-		:multiple="${val._multiple}"
-		:limit="${val._multiple ? val._limit : 1}"
+		:multiple="${val.attrs._multiple}"
+		:limit="${val.attrs._multiple ? val.attrs._limit : 1}"
 		:file-list="${val.field}FileList"
 		:accept="${val.field}Accept"
 		${disabled}
 		>
 		<el-button size="mini" type="primary">点击上传</el-button>
-		<div slot="tip" class="el-upload__tip">只能上传${val._accept}格式文件，且不超过${val._size}MB</div>
+		<div slot="tip" class="el-upload__tip">只能上传${val.attrs._accept}格式文件，且不超过${val.attrs._size}MB</div>
 	  </el-upload>`
 		return inputModel
 	},
 	inputNumber: (val) => {
 		const inputModel = `<el-input-number
 		v-model="form.${val.field}"
-		:min="${val._min}"
-		:max="${val._max}"
-		:step="${val._step}"
-		controls-position="${val._controlsPosition}"
+		:min="${val.attrs._min}"
+		:max="${val.attrs._max}"
+		:step="${val.attrs._step}"
+		controls-position="${val.attrs._controlsPosition}"
 		${disabled}
 	  />`
 		return inputModel

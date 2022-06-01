@@ -1,56 +1,41 @@
 import {FormKeyTypeNoUd} from './form'
-
-export type FormFeild<T> = {
+import {
+	InputAttrs,
+	CheckboxAttrs,
+	SelectAttrs,
+	RadioAttrs,
+	UploadAttrs,
+	InputNumberAttrs,
+	DatePickerAttrs,
+	AttrsType,
+} from './Attrs'
+export type FormFeild<T, S = object> = {
 	type: T
 	field: string
 	label: string
 	_required: boolean
 	_value: string
 	_disabled?: boolean
+	attrs: S
 }
 
-export type InputFeild<T = FormKeyTypeNoUd> = FormFeild<T> & {
-	//
-}
+export type InputFeild<T = FormKeyTypeNoUd> = FormFeild<T, InputAttrs>
 
-export type CheckboxFeild<T = FormKeyTypeNoUd> = FormFeild<T> & {
-	_message?: string
-	_option?: string
-}
+export type CheckboxFeild<T = FormKeyTypeNoUd> = FormFeild<T, CheckboxAttrs>
 
-export type SelectFeild<T = FormKeyTypeNoUd> = FormFeild<T> & {
-	_option?: string
-}
+export type SelectFeild<T = FormKeyTypeNoUd> = FormFeild<T, SelectAttrs>
 
-export type RadioFeild<T = FormKeyTypeNoUd> = FormFeild<T> & {
-	_option?: string
-}
-// export type TextareaFeild<T = FormKeyTypeNoUd> = FormFeild<T> & {
-// 	_rows?: number
-// 	_maxlength?: number
-// }
-export type UploadFeild<T = FormKeyTypeNoUd> = FormFeild<T> & {
-	_multiple?: boolean
-	_limit?: number
-	_accept?: string
-	_size?: number
-}
-export type InputNumberFeild<T = FormKeyTypeNoUd> = FormFeild<T> & {
-	_min?: number
-	_max?: number
-	_step?: number
-	_controlsPosition?: string
-}
-export type DatePickerFeild<T = FormKeyTypeNoUd> = FormFeild<T> & {
-	//
-}
+export type RadioFeild<T = FormKeyTypeNoUd> = FormFeild<T, RadioAttrs>
+
+export type UploadFeild<T = FormKeyTypeNoUd> = FormFeild<T, UploadAttrs>
+export type InputNumberFeild<T = FormKeyTypeNoUd> = FormFeild<T, InputNumberAttrs>
+export type DatePickerFeild<T = FormKeyTypeNoUd> = FormFeild<T, DatePickerAttrs>
 
 export type FeildType<T = FormKeyTypeNoUd> =
 	| InputFeild<T>
 	| CheckboxFeild<T>
 	| SelectFeild<T>
 	| RadioFeild<T>
-	// | TextareaFeild<T>
 	| UploadFeild<T>
 	| UploadFeild<T>
 	| InputNumberFeild<T>
@@ -76,6 +61,5 @@ export type GenComponentType = {
 }
 
 export type InitDataType = {
-	// Omit去除某些key
-	[P in FormKeyTypeNoUd]: () => Omit<StoreFiledType[P], keyof FormFeild<FormKeyTypeNoUd>>
+	[P in FormKeyTypeNoUd]: () => AttrsType[P]
 }

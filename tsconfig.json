@@ -12,6 +12,7 @@
 		"lib": ["esnext", "dom"],
 		"skipLibCheck": true,
 		"allowSyntheticDefaultImports": true,
+		"allowJs": true,
 		"types": ["vite/client"],
 		"paths": {
 			"@/*": ["./src/*"]

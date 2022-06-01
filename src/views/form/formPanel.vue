@@ -33,45 +33,48 @@
           <el-form-item style="width:258px" label="_required" prop="_required">
             <el-checkbox v-model="form._required" clearable></el-checkbox>
           </el-form-item>
-          <el-form-item v-if="'_message' in form" label="_message" prop="_message">
-            <el-input v-model="form._message" clearable></el-input>
-          </el-form-item>
-          <el-form-item v-if="'_option' in form" label="_option" prop="_option">
-            <el-input v-model="form._option" clearable></el-input>
-          </el-form-item>
-          <!-- <el-form-item v-if="'_rows' in form" label="_rows" prop="_rows">
+          <div v-if="form.attrs">
+            <el-form-item v-if="'_message' in form.attrs" label="_message" prop="_message">
+              <el-input v-model="form.attrs._message" clearable></el-input>
+            </el-form-item>
+            <el-form-item v-if="'_option' in form.attrs" label="_option" prop="_option">
+              <el-input v-model="form.attrs._option" clearable></el-input>
+            </el-form-item>
+            <!-- <el-form-item v-if="'_rows' in form" label="_rows" prop="_rows">
             <el-input-number v-model="form._rows" clearable></el-input-number>
           </el-form-item>
           <el-form-item v-if="'_maxlength' in form" label="_maxlength" prop="_maxlength">
             <el-input-number v-model="form._maxlength" clearable></el-input-number>
           </el-form-item> -->
-          <el-form-item v-if="'_size' in form" label="_size(MB)" prop="_size">
-            <el-input-number v-model="form._size" clearable :max="100" :min="0"></el-input-number>
-          </el-form-item>
-          <el-form-item v-if="'_accept' in form" label="_accept" prop="_accept">
-            <el-input v-model="form._accept"></el-input>
-          </el-form-item>
-          <el-form-item v-if="'_multiple' in form" label="_multiple" prop="_multiple">
-            <el-checkbox v-model="form._multiple"></el-checkbox>
-          </el-form-item>
-          <el-form-item v-if="'_multiple' in form && form._multiple" label="_limit" prop="_limit">
-            <el-input-number v-model="form._limit" clearable :max="100" :min="0"></el-input-number>
-          </el-form-item>
-          <el-form-item v-if="'_min' in form" label="_min" prop="_min">
-            <el-input-number v-model="form._min" clearable :max="100" :min="0"></el-input-number>
-          </el-form-item>
-          <el-form-item v-if="'_max' in form" label="_max" prop="_max">
-            <el-input-number v-model="form._max" clearable :max="1000000" :min="0"></el-input-number>
-          </el-form-item>
-          <el-form-item v-if="'_step' in form" label="_step" prop="_step">
-            <el-input-number v-model="form._step" clearable :max="1000" :min="0"></el-input-number>
-          </el-form-item>
-          <el-form-item v-if="'_controlsPosition' in form" label="_controlsPosition" prop="_controlsPosition">
-            <el-select v-model="form._controlsPosition" placeholder>
-              <el-option v-for="item in controlsPositionOptions" :key="item.value" :value="item.value">{{ item.label }}
-              </el-option>
-            </el-select>
-          </el-form-item>
+            <el-form-item v-if="'_size' in form.attrs" label="_size(MB)" prop="_size">
+              <el-input-number v-model="form.attrs._size" clearable :max="100" :min="0"></el-input-number>
+            </el-form-item>
+            <el-form-item v-if="'_accept' in form.attrs" label="_accept" prop="_accept">
+              <el-input v-model="form.attrs._accept"></el-input>
+            </el-form-item>
+            <el-form-item v-if="'_multiple' in form.attrs" label="_multiple" prop="_multiple">
+              <el-checkbox v-model="form.attrs._multiple"></el-checkbox>
+            </el-form-item>
+            <el-form-item v-if="'_multiple' in form.attrs && form.attrs._multiple" label="_limit" prop="_limit">
+              <el-input-number v-model="form.attrs._limit" clearable :max="100" :min="0"></el-input-number>
+            </el-form-item>
+            <el-form-item v-if="'_min' in form.attrs" label="_min" prop="_min">
+              <el-input-number v-model="form.attrs._min" clearable :max="100" :min="0"></el-input-number>
+            </el-form-item>
+            <el-form-item v-if="'_max' in form.attrs" label="_max" prop="_max">
+              <el-input-number v-model="form.attrs._max" clearable :max="1000000" :min="0"></el-input-number>
+            </el-form-item>
+            <el-form-item v-if="'_step' in form.attrs" label="_step" prop="_step">
+              <el-input-number v-model="form.attrs._step" clearable :max="1000" :min="0"></el-input-number>
+            </el-form-item>
+            <el-form-item v-if="'_controlsPosition' in form.attrs" label="_controlsPosition" prop="_controlsPosition">
+              <el-select v-model="form.attrs._controlsPosition" placeholder>
+                <el-option v-for="item in controlsPositionOptions" :key="item.value" :value="item.value">{{ item.label
+                }}
+                </el-option>
+              </el-select>
+            </el-form-item>
+          </div>
         </div>
       </div>
     </el-form>
@@ -90,13 +93,11 @@
     </div>
   </div>
 </template>
+
+
+
 <script lang="ts">
-export default {
-  name: 'FormPanel',
-}
-</script>
-<script lang="ts" setup>
-import { ref } from 'vue'
+import { ref, defineComponent } from 'vue'
 import { typeOptions, controlsPositionOptions } from '@/data/options'
 import { genTemplete } from '@/model/templete'
 import { FeildType, FormListType } from '@/types/field'
@@ -111,66 +112,110 @@ import { storageHandle } from '@/hooks/storage'
 import BtnConfig from '@/components/form/btnConfig.vue'
 import ToolBar from '@/components/form/toolBar.vue'
 
-defineProps<{
-  code: string
-}>()
-
-const emits = defineEmits(['update:code'])
-const elFormRef = ref<typeof ElForm>()
-const ruleForm = ref<FeildType<FormKeyType>[]>([getField()])
-const delHandle = (index: number) => {
-  ruleForm.value.splice(index, 1)
-}
-const { configForm } = configHandle()
-const { storage, setStorage, getStorage, deleteStorage } = storageHandle('form')
-
-const viewStorage = (index: number) => {
-  const storageValue = getStorage(index)
-  ruleForm.value = storageValue.ruleForm
-  setConfigForm(storageValue.configForm)
-  viewCodeHandle()
-}
-const viewCodeHandle = () => {
-  // debugger
-  const code = genTemplete(configForm, ruleForm.value as FormListType, btns.value)
-  const formatCode = prettierFormat(code)
-  emits('update:code', formatCode)
-}
-const genHandle = () => {
-  elFormRef.value?.validate((valid: boolean) => {
-    if (valid) {
-      viewCodeHandle()
-      setStorage({ configForm, ruleForm: ruleForm.value as FormListType })
-    } else {
-      ElMessage.error("error validate!!")
-      console.log('error validate!!')
+export default defineComponent({
+  name: 'FormPanel',
+  props: {
+    code: {
+      type: String,
+      required: true,
+    },
+  },
+  components: {
+    ToolBar,
+    BtnConfig,
+    CircleCloseFilled,
+  },
+  emits: ['update:code'],
+  setup(_props, { emit: emits }) {
+    const elFormRef = ref<typeof ElForm>()
+    const ruleForm = ref<FeildType<FormKeyType>[]>([getField()])
+    const delHandle = (index: number) => {
+      ruleForm.value.splice(index, 1)
     }
-  })
-}
+    const { configForm } = configHandle()
+    const { storage, setStorage, getStorage, deleteStorage } = storageHandle('form')
 
-const saveBaseForm = <T, S extends keyof T>(dataForm: T, form: Pick<T, S>): Pick<T, S> => {
-  for (const key in form) {
-    form[key] = dataForm[key]
-  }
-  return { ...form }
-}
+    const viewStorage = (index: number) => {
+      const storageValue = getStorage(index)
+      ruleForm.value = storageValue.ruleForm
+      setConfigForm(storageValue.configForm)
+      viewCodeHandle()
+    }
+    const viewCodeHandle = () => {
+      // debugger
+      const code = genTemplete(configForm, ruleForm.value as FormListType, btns.value)
+      const formatCode = prettierFormat(code)
+      emits('update:code', formatCode)
+    }
+    const genHandle = () => {
+      elFormRef.value?.validate((valid: boolean) => {
+        if (valid) {
+          viewCodeHandle()
+          setStorage({ configForm, ruleForm: ruleForm.value as FormListType })
+        } else {
+          ElMessage.error("error validate!!")
+          console.log('error validate!!')
+        }
+      })
+    }
 
-const typeChange = (key: FormKeyType, index: number) => {
-  const dataForm = saveBaseForm(ruleForm.value[index], getField()) // 保留基础值
-  if (key) {
-    const data = initData[key]() // type对应初始值
-    ruleForm.value[index] = { ...dataForm, ...data }
-  } else {
-    ruleForm.value[index] = { ...dataForm }
-  }
-}
-const addHandle = (num:number) => {
-  for(let i = 0;i<num; i++){
-    ruleForm.value.push(getField())
-  }
-}
-const btns = ref([{ value: '取消',eventMethodName:'cancel' }, { value: '保存', type: 'primary', eventMethodName:'save' }])
+    const saveBaseForm = <T, S extends keyof T>(dataForm: T, form: Pick<T, S>): Pick<T, S> => {
+      for (const key in form) {
+        form[key] = dataForm[key]
+      }
+      return { ...form }
+    }
 
+    const typeChange = (key: FormKeyType, index: number) => {
+      const dataForm = saveBaseForm(ruleForm.value[index], getField()) // 保留基础值
+      if (key) {
+        const data = initData[key]() // type对应初始值
+        ruleForm.value[index] = { ...dataForm, attrs: data }
+      } else {
+        ruleForm.value[index] = { ...dataForm }
+      }
+    }
+    const addHandle = (num: number) => {
+      for (let i = 0; i < num; i++) {
+        ruleForm.value.push(getField())
+      }
+    }
+    const btns = ref([{ value: '取消', eventMethodName: 'cancel' }, { value: '保存', type: 'primary', eventMethodName: 'save' }])
+    return {
+      ref,
+      defineComponent,
+      typeOptions,
+      controlsPositionOptions,
+      genTemplete,
+      initData,
+      ElForm,
+      ElMessage,
+      getField,
+      Delete,
+      CircleCloseFilled,
+      prettierFormat,
+      configHandle,
+      setConfigForm,
+      storageHandle,
+      BtnConfig,
+      elFormRef,
+      ruleForm,
+      delHandle,
+      configForm,
+      storage,
+      setStorage,
+      getStorage,
+      deleteStorage,
+      viewStorage,
+      viewCodeHandle,
+      genHandle,
+      saveBaseForm,
+      typeChange,
+      addHandle,
+      btns,
+    };
+  },
+});
 </script>
 <style>
 .el-form-item__content {

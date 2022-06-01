@@ -2,7 +2,7 @@ import {BtnListType} from '@/types/btn'
 import {GenScriptType, GenSetupItemType, SetupItemKeyType} from './../types/gen'
 import {GenSetupType, GenSetupReType} from './../types/gen'
 import {FormDataType, RulesTriggerEnum} from './../types/form'
-import {FormListType, SelectFeild, UploadFeild} from './../types/field'
+import {FormListType, SelectFeild, UploadFeild, CheckboxFeild} from './../types/field'
 import {select, checkbox} from '@/data/word'
 import {configHandle} from '@/hooks/config'
 import {genComponents} from './components'
@@ -137,11 +137,11 @@ const genSetUpItem: GenSetupItemType = {
 		}
 	},
 	genCheckbox(formList) {
-		const checkboxs: SelectFeild[] = formList.filter((item) => item.type === 'checkbox')
+		const checkboxs = <CheckboxFeild[]>formList.filter((item) => item.type === 'checkbox')
 		let checkboxOption: GenSetupReType[] = []
 		if (checkboxs.length > 0) {
 			checkboxOption = checkboxs.map((item) => {
-				const option = item._option ? item._option.split(/\s+/) : checkbox
+				const option = item.attrs._option ? item.attrs._option.split(/\s+/) : checkbox
 				const arr = option.map((val, index) => {
 					return {
 						label: val,
@@ -160,11 +160,11 @@ const genSetUpItem: GenSetupItemType = {
 		}
 	},
 	genSelect: (formList) => {
-		const selects: SelectFeild[] = formList.filter((item) => item.type === 'select')
+		const selects = <SelectFeild[]>formList.filter((item) => item.type === 'select')
 		let selectOption: GenSetupReType[] = []
 		if (selects.length > 0) {
 			selectOption = selects.map((item) => {
-				const option = item._option ? item._option.split(/\s+/) : select
+				const option = item.attrs._option ? item.attrs._option.split(/\s+/) : select
 				const arr = option.map((val) => {
 					return {
 						label: val,
@@ -183,7 +183,7 @@ const genSetUpItem: GenSetupItemType = {
 		}
 	},
 	genUpload: (formList) => {
-		const uploads: UploadFeild[] = formList.filter((item) => item.type === 'upload')
+		const uploads = <UploadFeild[]>formList.filter((item) => item.type === 'upload')
 		let uploadVar: GenSetupReType[] = []
 		if (uploads.length > 0) {
 			uploadVar = uploads.map((item) => {
@@ -195,7 +195,7 @@ const genSetUpItem: GenSetupItemType = {
 				return {
 					values: `
 							const ${fileList} = []
-							const ${accept} = "${item._accept}"
+							const ${accept} = "${item.attrs._accept}"
 							const ${handleSuccess} = (res, file,fileList)=>{
 								form.${item.field} = res.data
 							}
@@ -206,9 +206,9 @@ const genSetUpItem: GenSetupItemType = {
 								if (!isType) {
 									this.$message.error('文件格式不正确');
 								}
-								const isSize = file.size / 1024 / 1024 < ${item._size};
+								const isSize = file.size / 1024 / 1024 < ${item.attrs._size};
 								if (!isSize) {
-								this.$message.error('文件大小不超过${item._size}MB!');
+								this.$message.error('文件大小不超过${item.attrs._size}MB!');
 								}
 								return isType && isSize;
 							}

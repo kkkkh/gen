@@ -16,11 +16,12 @@ export const defaultConfig: FormConfig = {
 	_components: false,
 }
 
-export const getField = (): FormFeild<FormKeyType> => ({
+export const getField = (): FormFeild<FormKeyType, object> => ({
 	type: undefined,
 	field: '',
 	label: '',
 	_required: false,
 	_value: '',
+	attrs: {},
 	// _disabled: true,
 })

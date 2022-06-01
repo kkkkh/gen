@@ -1,5 +1,6 @@
 <template>
   <div class="flex">
+    <test></test>
     <form-panel class="flex-1" v-model:code="code"></form-panel>
     <code-panel class="flex-1" v-model:code="code"></code-panel>
   </div>
@@ -7,7 +8,9 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import CodePanel from "./codePanel.vue";
-import FormPanel from "./formPanel.vue";
+import FormPanel from "./formPanel.tsx";
+import Test from "./test.tsx";
+// import FormPanel from "./formPanel.vue";
 
 defineExpose({
   CodePanel,

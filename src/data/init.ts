@@ -2,7 +2,7 @@ import {InitDataType} from './../types/field'
 
 export const initData: InitDataType = {
 	input: () => {
-		return {}
+		return null
 	},
 	checkbox: () => {
 		return {
@@ -31,6 +31,6 @@ export const initData: InitDataType = {
 		_controlsPosition: 'right',
 	}),
 	datePicker: () => {
-		return {}
+		return null
 	},
 }
