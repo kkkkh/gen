@@ -3,7 +3,7 @@ import {parseComponent} from 'vue-template-compiler'
 import getImports from '@/utils/get-imports' //babel插件 获取imports集合
 import importsCompiledHandle from '@/utils/compiled-import' //compile imports
 import * as compiler from '@vue/compiler-sfc'
-import {configHandle} from '@/hooks/config'
+import {configHandle} from '@/hooks/form/configForm'
 const {configForm} = configHandle()
 export const compileCode: CompileCodeType = {
 	vue2x: (source: string) => {

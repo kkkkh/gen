@@ -13,31 +13,19 @@ const routes: Array<RouteRecordRaw> = [
 	{
 		path: '/table',
 		name: 'table',
-		// route level code-splitting
-		// this generates a separate chunk (about.[hash].js) for this route
-		// which is lazy-loaded when the route is visited.
-		component: () => import(/* webpackChunkName: "table" */ '../views/table.vue'),
-	},
-	{
-		path: '/data/',
-		name: 'data',
-		redirect: '/data/table',
-		// route level code-splitting
-		// this generates a separate chunk (about.[hash].js) for this route
-		// which is lazy-loaded when the route is visited.
-		component: () => import(/* webpackChunkName: "data" */ '../views/data/index.vue'),
+		component: () => import(/* webpackChunkName: "dataTable" */ '../views/table/index.vue'),
 		children: [
 			{
-				path: 'table',
-				name: 'data-table',
-				component: () => import(/* webpackChunkName: "dataTable" */ '../views/data/table.vue'),
-			},
-			{
-				path: 'graphql',
-				name: 'data-graphql',
-				component: () => import(/* webpackChunkName: "dataTable" */ '../views/data/graphql.vue'),
+				path: 'data',
+				name: 'table-data',
+				component: () => import(/* webpackChunkName: "dataTable" */ '../views/table/data.vue'),
 			},
 		],
+	},
+	{
+		path: '/graphql',
+		name: 'data-graphql',
+		component: () => import(/* webpackChunkName: "dataTable" */ '../views/graphql/index.vue'),
 	},
 ]
 

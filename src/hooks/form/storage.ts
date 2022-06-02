@@ -1,9 +1,9 @@
 import {ref} from 'vue'
-import {StorageItemType} from '../types/stroage'
+import {StorageItemType} from '../../types/stroage'
 import {OptionType} from '@/types/option'
 
+const storage = ref<OptionType<string>[]>([])
 export const storageHandle = (name: string) => {
-	const storage = ref<OptionType<string>[]>([])
 	const updateStorage = () => {
 		storage.value = []
 		let index = localStorage.length

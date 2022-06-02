@@ -1,6 +1,6 @@
-import {FormConfig} from './../types/config'
-import {defaultConfig} from './../data/default'
-import {ConfigHandleType} from './../types/config'
+import {FormConfig} from '../../types/config'
+import {defaultConfig} from '../../data/default'
+import {ConfigHandleType} from '../../types/config'
 import {ref, reactive} from 'vue'
 let configForm = reactive<FormConfig>(defaultConfig)
 

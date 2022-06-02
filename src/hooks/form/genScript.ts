@@ -1,11 +1,11 @@
 import {BtnListType} from '@/types/btn'
-import {GenScriptType, GenSetupItemType, SetupItemKeyType} from './../types/gen'
-import {GenSetupType, GenSetupReType} from './../types/gen'
-import {FormDataType, RulesTriggerEnum} from './../types/form'
-import {FormListType, SelectFeild, UploadFeild, CheckboxFeild} from './../types/field'
+import {GenScriptType, GenSetupItemType, SetupItemKeyType} from '../../types/gen'
+import {GenSetupType, GenSetupReType} from '../../types/gen'
+import {FormDataType, RulesTriggerEnum} from '../../types/form'
+import {SelectFeild, UploadFeild, CheckboxFeild} from '../../types/field'
 import {select, checkbox} from '@/data/word'
-import {configHandle} from '@/hooks/config'
-import {genComponents} from './components'
+import {configHandle} from '@/hooks/form/configForm'
+import {genComponents} from './genComponents'
 const {configForm} = configHandle()
 export const genScript: GenScriptType = {
 	vue2x: (formList, btnList) => {

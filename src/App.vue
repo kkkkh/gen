@@ -6,22 +6,14 @@
 			<img class="mr-3" src="@/assets/svg/logo.svg" />
 			<span class="text-gray-100 text-2xl">gen code</span>
 		</div>
-		<el-menu
-			size="mini"
-			:default-active="activeIndex"
-			class="el-menu-demo flex-grow h-14"
-			mode="horizontal"
-			@select="handleSelect"
-			:router="true"
-		>
+		<el-menu size="mini" :default-active="activeIndex" class="el-menu-demo flex-grow h-14" mode="horizontal"
+			@select="handleSelect" :router="true">
 			<el-menu-item index="/form">form</el-menu-item>
-			<el-menu-item index="/table">table</el-menu-item>
-			<!-- <el-menu-item index="/data">data</el-menu-item> -->
-			<el-sub-menu index="/data">
-				<template #title>data</template>
-				<el-menu-item index="/data/table">table</el-menu-item>
-				<el-menu-item index="/data/graphql">graphql</el-menu-item>
+			<el-sub-menu index="/table">
+				<template #title>table</template>
+				<el-menu-item index="/table/data">data</el-menu-item>
 			</el-sub-menu>
+			<el-menu-item index="/graphql">graphql</el-menu-item>
 		</el-menu>
 	</div>
 	<router-view></router-view>

@@ -79,7 +79,7 @@
       </div>
     </el-form>
     <!-- btn -->
-    <btn-config v-model:value="btns"></btn-config>
+    <btn-bar v-model:value="btns"></btn-bar>
     <!-- store -->
     <div class="flex m-2 items-center flex-wrap">
       <span class="text-xs" v-if="storage.length">storage：</span>
@@ -99,7 +99,7 @@
 <script lang="ts">
 import { ref, defineComponent } from 'vue'
 import { typeOptions, controlsPositionOptions } from '@/data/options'
-import { genTemplete } from '@/model/templete'
+import { genCode } from '@/hooks/form/genCode'
 import { FeildType, FormListType } from '@/types/field'
 import { initData } from '@/data/init'
 import { FormKeyType } from '@/types/form'
@@ -107,9 +107,9 @@ import { ElForm, ElMessage } from 'element-plus'
 import { getField } from '@/data/default'
 import { Delete, CircleCloseFilled } from '@element-plus/icons'
 import { prettierFormat } from '@/utils/format'
-import { configHandle, setConfigForm } from "@/hooks/config"
-import { storageHandle } from '@/hooks/storage'
-import BtnConfig from '@/components/form/btnConfig.vue'
+import { configHandle, setConfigForm } from "@/hooks/form/configForm"
+import { storageHandle } from '@/hooks/form/storage'
+import BtnBar from '@/components/form/btnBar.vue'
 import ToolBar from '@/components/form/toolBar.vue'
 
 export default defineComponent({
@@ -122,7 +122,7 @@ export default defineComponent({
   },
   components: {
     ToolBar,
-    BtnConfig,
+    BtnBar,
     CircleCloseFilled,
   },
   emits: ['update:code'],
@@ -143,7 +143,7 @@ export default defineComponent({
     }
     const viewCodeHandle = () => {
       // debugger
-      const code = genTemplete(configForm, ruleForm.value as FormListType, btns.value)
+      const code = genCode(configForm, ruleForm.value as FormListType, btns.value)
       const formatCode = prettierFormat(code)
       emits('update:code', formatCode)
     }
@@ -186,7 +186,6 @@ export default defineComponent({
       defineComponent,
       typeOptions,
       controlsPositionOptions,
-      genTemplete,
       initData,
       ElForm,
       ElMessage,
@@ -197,7 +196,6 @@ export default defineComponent({
       configHandle,
       setConfigForm,
       storageHandle,
-      BtnConfig,
       elFormRef,
       ruleForm,
       delHandle,

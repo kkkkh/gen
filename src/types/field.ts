@@ -9,7 +9,7 @@ import {
 	DatePickerAttrs,
 	AttrsType,
 } from './Attrs'
-export type FormFeild<T, S = object> = {
+export type FormFeild<T, S> = {
 	type: T
 	field: string
 	label: string

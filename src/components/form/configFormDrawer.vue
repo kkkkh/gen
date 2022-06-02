@@ -41,11 +41,11 @@
 </template>
 <script setup lang="ts">
 import { ref } from "vue";
-import { configHandle } from "@/hooks/config";
+import { configHandle } from "@/hooks/form/configForm";
 import { scriptOptions } from '@/data/options'
 
 const direction = ref('ltr')
 const { visible, show, close, configForm } = configHandle()
 
-defineExpose({show,close})
+defineExpose({ show, close })
 </script>

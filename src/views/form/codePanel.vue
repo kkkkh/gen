@@ -4,7 +4,8 @@
     <div class="p-2">
       <el-tabs v-model="active">
         <el-tab-pane label="code" name="code">
-          <el-button class="absolute right-0 top-0 mr-2 mt-2 z-10" size="small" type="primary" @click="copyHandle">copy</el-button>
+          <el-button class="absolute right-0 top-0 mr-2 mt-2 z-10" size="small" type="primary" @click="copyHandle">copy
+          </el-button>
           <code-eidt :value="code"></code-eidt>
         </el-tab-pane>
         <el-tab-pane label="preview" name="preview">
@@ -24,11 +25,11 @@ export default {
 <script lang="ts" setup>
 import { ElMessage } from "element-plus";
 import { watch, ref } from "vue";
-import CodeEidt from "@/components/form/codeEidt.vue";
-import PreviewPanel from "@/components/form/previewPanel.vue";
-import {configHandle} from '@/hooks/config'
-import {compileCode} from "@/model/compileCode";
-const {configForm} = configHandle()
+import CodeEidt from "@/components/code/codeEidt.vue";
+import PreviewPanel from "@/components/code/previewPanel.vue";
+import { configHandle } from '@/hooks/form/configForm'
+import { compileCode } from "@/hooks/code/compileCode";
+const { configForm } = configHandle()
 const props = defineProps({
   code: {
     type: String,

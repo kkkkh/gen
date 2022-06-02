@@ -3,7 +3,7 @@
 </template>
 <script setup lang="ts">
 import { ref, onMounted, watch } from "vue";
-import createIframe from "@/utils/iframe";
+import createIframe from "@/hooks/code/iframe";
 const iframeDiv = ref();
 const iframe = ref();
 const props = defineProps({

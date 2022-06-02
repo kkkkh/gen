@@ -1,5 +1,5 @@
 import {FormListType} from '@/types/field'
-import {configHandle} from '@/hooks/config'
+import {configHandle} from '@/hooks/form/configForm'
 import {FormKeyTypeNoUd} from '@/types/form'
 import {KeyMapType, ElementUIFromType} from '@/types/components'
 
@@ -26,7 +26,6 @@ const getComponents = (types: FormKeyTypeNoUd[]) => {
 	return eles.flat()
 }
 export const genComponents = (formList: FormListType) => {
-	debugger
 	let importComponents = ''
 	let components = ''
 	if (configForm._components) {
