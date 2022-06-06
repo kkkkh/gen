@@ -5,31 +5,84 @@ export const initData: InitDataType = {
 		return null
 	},
 	checkbox: () => {
-		return {
-			_option: '',
-			// _message: '',
-		}
+		return [
+			{
+				key: 'option',
+				value: '',
+				elType: 'input',
+			},
+		]
 	},
-	select: () => ({_option: ''}),
-	radio: () => ({
-		_option: '',
-	}),
+	select: () => {
+		return [
+			{
+				key: 'option',
+				value: '',
+				elType: 'input',
+			},
+		]
+	},
+	radio: () => {
+		return [
+			{
+				key: 'option',
+				value: '',
+				elType: 'input',
+			},
+		]
+	},
 	// textarea: () => ({
 	// 	_rows: 2,
 	// 	_maxlength: 1000,
 	// }),
-	upload: () => ({
-		_multiple: false,
-		_limit: 1,
-		_accept: '.png,.jpg,.rar,.zip,.doc,.docx,.pdf,.xls,.xlsx',
-		_size: 1,
-	}),
-	inputNumber: () => ({
-		_max: 100000,
-		_min: 0,
-		_step: 1,
-		_controlsPosition: 'right',
-	}),
+	upload: () => {
+		return [
+			{
+				key: 'multiple',
+				value: false,
+				elType: 'checkbox',
+			},
+			{
+				key: 'limit',
+				value: 1,
+				elType: 'inputNumber',
+			},
+			{
+				key: 'accept',
+				value: '.png,.jpg,.rar,.zip,.doc,.docx,.pdf,.xls,.xlsx',
+				elType: 'input',
+			},
+			{
+				key: 'size',
+				value: 1,
+				elType: 'inputNumber',
+			},
+		]
+	},
+	inputNumber: () => {
+		return [
+			{
+				key: 'max',
+				value: 100000,
+				elType: 'inputNumber',
+			},
+			{
+				key: 'min',
+				value: 0,
+				elType: 'inputNumber',
+			},
+			{
+				key: 'step',
+				value: 1,
+				elType: 'inputNumber',
+			},
+			{
+				key: 'step',
+				value: 'right',
+				elType: 'select',
+			},
+		]
+	},
 	datePicker: () => {
 		return null
 	},

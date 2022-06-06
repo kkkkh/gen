@@ -141,7 +141,8 @@ const genSetUpItem: GenSetupItemType = {
 		let checkboxOption: GenSetupReType[] = []
 		if (checkboxs.length > 0) {
 			checkboxOption = checkboxs.map((item) => {
-				const option = item.attrs._option ? item.attrs._option.split(/\s+/) : checkbox
+				const attrs = Object.fromEntries(item?.attrs?.map((item) => [item.key, item.value]) || [])
+				const option = attrs.option ? (attrs.option as string).split(/\s+/) : checkbox
 				const arr = option.map((val, index) => {
 					return {
 						label: val,
@@ -164,7 +165,8 @@ const genSetUpItem: GenSetupItemType = {
 		let selectOption: GenSetupReType[] = []
 		if (selects.length > 0) {
 			selectOption = selects.map((item) => {
-				const option = item.attrs._option ? item.attrs._option.split(/\s+/) : select
+				const attrs = Object.fromEntries(item?.attrs?.map((item) => [item.key, item.value]) || [])
+				const option = attrs.option ? (attrs.option as string).split(/\s+/) : select
 				const arr = option.map((val) => {
 					return {
 						label: val,
@@ -192,10 +194,11 @@ const genSetUpItem: GenSetupItemType = {
 				const handleSuccess = `${item.field}HandleSuccess`
 				const beforeUpload = `${item.field}BeforeUpload`
 				const handleRemove = `${item.field}HandleRemove`
+				const attrs = Object.fromEntries(item?.attrs?.map((item) => [item.key, item.value]) || [])
 				return {
 					values: `
 							const ${fileList} = []
-							const ${accept} = "${item.attrs._accept}"
+							const ${accept} = "${attrs.accept}"
 							const ${handleSuccess} = (res, file,fileList)=>{
 								form.${item.field} = res.data
 							}
@@ -206,9 +209,9 @@ const genSetUpItem: GenSetupItemType = {
 								if (!isType) {
 									this.$message.error('文件格式不正确');
 								}
-								const isSize = file.size / 1024 / 1024 < ${item.attrs._size};
+								const isSize = file.size / 1024 / 1024 < ${attrs.size};
 								if (!isSize) {
-								this.$message.error('文件大小不超过${item.attrs._size}MB!');
+								this.$message.error('文件大小不超过${attrs.size}MB!');
 								}
 								return isType && isSize;
 							}

@@ -98,7 +98,8 @@ export const genComponent: GenComponentType = {
 		// return inputModel
 	},
 	radio: (val) => {
-		const option = val?.attrs._option ? val.attrs._option.split(/\s+/) : radio
+		const _option = val?.attrs?.find((item) => item.key === 'option')
+		const option = _option ? (_option.value as string).split(/\s+/) : radio
 		const str = option.map((val, index) => `<el-radio :label="${index}">${val}</el-radio>`).join('')
 		return `<el-radio-group v-model="form.${val.field}" ${disabled}>${str}</el-radio-group>`
 	},
@@ -107,28 +108,30 @@ export const genComponent: GenComponentType = {
 	// 	return inputModel
 	// },
 	upload: (val) => {
+		const attrs = Object.fromEntries(val?.attrs?.map((item) => [item.key, item.value]) || [])
 		return `<el-upload
 		action="/posts/"
 		:on-success="${val.field}HandleSuccess"
 		:before-upload="${val.field}BeforeUpload"
 		:on-remove="${val.field}HandleRemove"
-		:multiple="${val.attrs._multiple}"
-		:limit="${val.attrs._multiple ? val.attrs._limit : 1}"
+		:multiple="${attrs.multiple}"
+		:limit="${attrs.multiple ? attrs.limit : 1}"
 		:file-list="${val.field}FileList"
 		:accept="${val.field}Accept"
 		${disabled}
 		>
 		<el-button size="mini" type="primary">点击上传</el-button>
-		<div slot="tip" class="el-upload__tip">只能上传${val.attrs._accept}格式文件，且不超过${val.attrs._size}MB</div>
+		<div slot="tip" class="el-upload__tip">只能上传${attrs.accept}格式文件，且不超过${attrs.size}MB</div>
 	  </el-upload>`
 	},
 	inputNumber: (val) => {
+		const attrs = Object.fromEntries(val?.attrs?.map((item) => [item.key, item.value]) || [])
 		return `<el-input-number
 		v-model="form.${val.field}"
-		:min="${val.attrs._min}"
-		:max="${val.attrs._max}"
-		:step="${val.attrs._step}"
-		controls-position="${val.attrs._controlsPosition}"
+		:min="${attrs.min}"
+		:max="${attrs.max}"
+		:step="${attrs.step}"
+		controls-position="${attrs.controlsPosition}"
 		${disabled}
 	  />`
 	},

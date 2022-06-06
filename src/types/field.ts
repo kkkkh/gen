@@ -1,13 +1,13 @@
 import {FormKeyTypeNoUd} from './form'
 import {
-	InputAttrs,
-	CheckboxAttrs,
-	SelectAttrs,
-	RadioAttrs,
-	UploadAttrs,
-	InputNumberAttrs,
-	DatePickerAttrs,
-	AttrsType,
+	BaseAttrsType,
+	// InputAttrs,
+	// CheckboxAttrs,
+	// SelectAttrs,
+	// RadioAttrs,
+	// UploadAttrs,
+	// InputNumberAttrs,
+	// DatePickerAttrs,
 } from './Attrs'
 export type FormFeild<T, S> = {
 	type: T
@@ -19,17 +19,17 @@ export type FormFeild<T, S> = {
 	attrs: S
 }
 
-export type InputFeild<T = FormKeyTypeNoUd> = FormFeild<T, InputAttrs>
+export type InputFeild<T = FormKeyTypeNoUd> = FormFeild<T, BaseAttrsType>
 
-export type CheckboxFeild<T = FormKeyTypeNoUd> = FormFeild<T, CheckboxAttrs>
+export type CheckboxFeild<T = FormKeyTypeNoUd> = FormFeild<T, BaseAttrsType>
 
-export type SelectFeild<T = FormKeyTypeNoUd> = FormFeild<T, SelectAttrs>
+export type SelectFeild<T = FormKeyTypeNoUd> = FormFeild<T, BaseAttrsType>
 
-export type RadioFeild<T = FormKeyTypeNoUd> = FormFeild<T, RadioAttrs>
+export type RadioFeild<T = FormKeyTypeNoUd> = FormFeild<T, BaseAttrsType>
 
-export type UploadFeild<T = FormKeyTypeNoUd> = FormFeild<T, UploadAttrs>
-export type InputNumberFeild<T = FormKeyTypeNoUd> = FormFeild<T, InputNumberAttrs>
-export type DatePickerFeild<T = FormKeyTypeNoUd> = FormFeild<T, DatePickerAttrs>
+export type UploadFeild<T = FormKeyTypeNoUd> = FormFeild<T, BaseAttrsType>
+export type InputNumberFeild<T = FormKeyTypeNoUd> = FormFeild<T, BaseAttrsType>
+export type DatePickerFeild<T = FormKeyTypeNoUd> = FormFeild<T, BaseAttrsType>
 
 export type FeildType<T = FormKeyTypeNoUd> =
 	| InputFeild<T>
@@ -52,7 +52,6 @@ export type StoreFiledType<T = FormKeyTypeNoUd> = {
 	datePicker: DatePickerFeild<T>
 }
 
-// export type FormListType = Array<InputFeild | CheckboxFeild | SelectFeild>
 export type FormItemType = FeildType<FormKeyTypeNoUd>
 export type FormListType = FeildType<FormKeyTypeNoUd>[]
 
@@ -61,5 +60,5 @@ export type GenComponentType = {
 }
 
 export type InitDataType = {
-	[P in FormKeyTypeNoUd]: () => AttrsType[P]
+	[P in FormKeyTypeNoUd]: () => BaseAttrsType
 }

@@ -8,8 +8,8 @@ import { configHandle, setConfigForm } from "@/hooks/form/configForm"
 import { storageHandle } from '@/hooks/form/storage'
 
 import { FeildType, FormListType } from '@/types/field'
-import { FormKeyType, FormKeyTypeNoUd } from '@/types/form'
-import { StructureType,StructureComType } from '@/types/structure'
+import { FormKeyType } from '@/types/form'
+import { StructureComType } from '@/types/structure'
 import {BtnListType} from '@/types/btn'
 import {StorageItemType} from '@/types/stroage'
 
@@ -74,62 +74,31 @@ export default defineComponent({
       viewCodeHandle()
     }
     const btns = ref([{ value: '取消', eventMethodName: 'cancel' }, { value: '保存', type: 'primary', eventMethodName: 'save' }])
-    const structure:StructureType = {
-      input:{},
-      checkbox:{
-        _message:'input',
-        _option:'input',
-      },
-      select:{
-        _option:'input',
-      },
-      radio:{
-        _option:'input',
-      },
-      upload:{
-        _size:'inputNumber',
-        _accept:'input',
-        _multiple:'checkbox',
-        _limit:'inputNumber',
-      },
-      inputNumber:{
-        _min:'inputNumber',
-        _max:'inputNumber',
-        _step:'inputNumber',
-        _controlsPosition:'select'
-      },
-      datePicker:{}
-    }
-    
     const options:{[name:string]:any[]} = {
       controlsPositionOptions
     }
     return ()=> {
       const structureCom:StructureComType = {
-        input: (key,form)=>{
+        input: (attrs)=>{
           return (
-            // @ts-ignore
-            <el-input v-model={form.attrs[key]} clearable></el-input>
+            <el-input v-model={attrs.value} clearable></el-input>
           )
         },
-        checkbox: (key,form)=>{
+        checkbox: (attrs)=>{
           return (
-            // @ts-ignore
-            <el-checkbox v-model={form.attrs[key]} clearable></el-checkbox>
+            <el-checkbox v-model={attrs.value} clearable></el-checkbox>
           )
         },
-        inputNumber(key,form){
+        inputNumber(attrs){
           return (
-            // @ts-ignore
-            <el-input-number v-model={form.attrs[key]} clearable max={100} min={0}></el-input-number>
+            <el-input-number v-model={attrs.value} clearable max={100} min={0}></el-input-number>
           )
         },
-        select(key,form){
+        select(attrs){
           return (
-            // @ts-ignore
-            <el-select v-model={form.attrs[key]} placeholder>
+            <el-select v-model={attrs.value} placeholder>
               {
-                options[`${key.slice(1)}Options`].map(item =>
+                options[`${attrs.key as string}Options`].map(item =>
                   <el-option key={item.value} value={item.value}>{ item.label }</el-option>
                 )
               }
@@ -175,13 +144,10 @@ export default defineComponent({
                   <el-form-item style="width:258px" label="_required" prop="_required">
                     <el-checkbox v-model={form._required} clearable></el-checkbox>
                   </el-form-item>
-                  {form.type && form.attrs ? Object.keys(form.attrs).map((fKey)  => {
-                    const type = form.type as FormKeyTypeNoUd
-                    const subStr = structure[type]
-                    const strComName:keyof StructureComType = subStr[fKey]
-                    return <el-form-item label={fKey} prop={fKey}>
+                  {form.type && form.attrs ? form.attrs.map((item)  => {
+                    return <el-form-item label={item.key} prop={item.key}>
                       {
-                        structureCom[strComName](fKey, form)
+                        structureCom[item.elType](item)
                       }
                     </el-form-item>
                   }):null}
