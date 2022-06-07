@@ -4,8 +4,9 @@ export type CheckboxType = 'checkbox'
 export type RadioType = 'radio'
 // export type TextareaType = 'textarea'
 export type UploadType = 'upload'
-export type InputNumber = 'inputNumber'
-export type DatePicker = 'datePicker'
+export type InputNumberType = 'inputNumber'
+export type DatePickerType = 'datePicker'
+export type TimePickerType = 'timePicker'
 
 export type FormKeyType =
 	| undefined
@@ -13,13 +14,13 @@ export type FormKeyType =
 	| SelectType
 	| CheckboxType
 	| RadioType
-	// | TextareaType
 	| UploadType
-	| InputNumber
-	| DatePicker
+	| InputNumberType
+	| DatePickerType
+	| TimePickerType
 
 export type FormKeyTypeNoUd = Exclude<FormKeyType, undefined>
-//
+
 export type FormDataType = {[name: string]: unknown}
 
 export enum RulesTriggerEnum {
@@ -27,8 +28,8 @@ export enum RulesTriggerEnum {
 	select = 'change',
 	checkbox = 'change',
 	radio = 'change',
-	// textarea = 'blur',
 	upload = 'change',
 	inputNumber = 'change',
 	datePicker = 'change',
+	timePicker = 'change',
 }

@@ -13,6 +13,7 @@ const keyMap: KeyMapType = {
 	upload: ['Upload', 'Button'],
 	inputNumber: ['InputNumber'],
 	datePicker: ['DatePicker'],
+	timePicker: ['TimePicker'],
 }
 const ElementUIFrom: ElementUIFromType = {
 	vue2x: 'element-ui',

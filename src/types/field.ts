@@ -30,6 +30,7 @@ export type RadioFeild<T = FormKeyTypeNoUd> = FormFeild<T, BaseAttrsType>
 export type UploadFeild<T = FormKeyTypeNoUd> = FormFeild<T, BaseAttrsType>
 export type InputNumberFeild<T = FormKeyTypeNoUd> = FormFeild<T, BaseAttrsType>
 export type DatePickerFeild<T = FormKeyTypeNoUd> = FormFeild<T, BaseAttrsType>
+export type TimePickerFeild<T = FormKeyTypeNoUd> = FormFeild<T, BaseAttrsType>
 
 export type FeildType<T = FormKeyTypeNoUd> =
 	| InputFeild<T>
@@ -40,16 +41,17 @@ export type FeildType<T = FormKeyTypeNoUd> =
 	| UploadFeild<T>
 	| InputNumberFeild<T>
 	| DatePickerFeild<T>
+	| TimePickerFeild<T>
 
 export type StoreFiledType<T = FormKeyTypeNoUd> = {
 	input: InputFeild<T>
 	checkbox: CheckboxFeild<T>
 	select: SelectFeild<T>
 	radio: RadioFeild<T>
-	// textarea: TextareaFeild<T>
 	upload: UploadFeild<T>
 	inputNumber: InputNumberFeild<T>
 	datePicker: DatePickerFeild<T>
+	timePicker: TimePickerFeild<T>
 }
 
 export type FormItemType = FeildType<FormKeyTypeNoUd>

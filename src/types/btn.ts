@@ -1,6 +1,9 @@
 type BtnType = {
 	value: string
 	type?: string
-	eventMethodName: string
+	methodName?: string
+	isValidate: boolean
 }
 export type BtnListType = BtnType[]
+
+export type BtnThemeType = 'primary' | 'success' | 'info' | 'warning' | 'danger' | undefined

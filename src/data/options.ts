@@ -1,6 +1,6 @@
 import {ScriptType} from '@/types/config'
+import {BtnThemeType} from '@/types/btn'
 import {FormOptionType, OptionType} from '../types/option'
-
 export const typeOptions: FormOptionType[] = [
 	{label: 'input', value: 'input'},
 	{label: 'select', value: 'select'},
@@ -9,6 +9,7 @@ export const typeOptions: FormOptionType[] = [
 	{label: 'upload', value: 'upload'},
 	{label: 'inputNumber', value: 'inputNumber'},
 	{label: 'datePicker', value: 'datePicker'},
+	{label: 'timePicker', value: 'timePicker'},
 ]
 
 export const scriptOptions: OptionType<ScriptType>[] = [
@@ -19,4 +20,17 @@ export const scriptOptions: OptionType<ScriptType>[] = [
 export const controlsPositionOptions = [
 	{label: '右侧', value: 'right'},
 	{label: '正常', value: ''},
+]
+
+export const inputTypeOptions = [
+	{label: 'text', value: 'text'},
+	{label: 'textarea', value: 'textarea'},
+]
+
+export const btnThemeList: OptionType<BtnThemeType>[] = [
+	{label: 'primary', value: 'primary'},
+	{label: 'success', value: 'success'},
+	{label: 'info', value: 'info'},
+	{label: 'warning', value: 'warning'},
+	{label: 'danger', value: 'danger'},
 ]

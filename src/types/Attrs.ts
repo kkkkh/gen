@@ -1,11 +1,13 @@
 import {FormKeyTypeNoUd} from './form'
-
+// import {Ref} from 'vue'
 export type ArrtsElType = Extract<FormKeyTypeNoUd, 'input' | 'checkbox' | 'inputNumber' | 'select'>
 
 export type BaseAttrs<T = string> = {
 	key: keyof T | string
 	elType: ArrtsElType
 	value: T[keyof T] | string | number | boolean
+	hide?: () => boolean
+	tick?: (val: unknown) => void
 }
 
 export type BaseAttrsType<T = string> = BaseAttrs<T>[] | null

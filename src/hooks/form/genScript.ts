@@ -75,13 +75,14 @@ const genBtnEventMethod = (btnList: BtnListType) => {
 	let values = ''
 	if (configForm._isBtn) {
 		values = btnList
-			.map((item, index) => {
-				return `const ${item.eventMethodName} = () => {
-					${index === 1 ? genValidate() : ''}
+			.filter((item) => item.methodName)
+			.map((item) => {
+				return `const ${item.methodName} = () => {
+					${item.isValidate ? genValidate() : ''}
 				}`
 			})
 			.join('\n')
-		vars = btnList.map((item) => `${item.eventMethodName},`).join('\n')
+		vars = btnList.map((item) => `${item.methodName},`).join('\n')
 	}
 	return {
 		vars,
@@ -91,7 +92,6 @@ const genBtnEventMethod = (btnList: BtnListType) => {
 const genDisabled = () => {
 	let vars = ''
 	let values = ''
-	debugger
 	if (configForm._globalDisabled) {
 		values = `const disabled = ref(true)`
 		vars = `disabled,`
@@ -126,8 +126,9 @@ const genSetUpItem: GenSetupItemType = {
 		const rules: FormDataType = {}
 		for (const val of formList) {
 			if (val._required) {
+				const text = RulesTriggerEnum[val.type] === RulesTriggerEnum.input ? '输入' : '选择'
 				rules[val.field] = [
-					{required: val._required, message: `请输入${val.label}`, trigger: RulesTriggerEnum[val.type]},
+					{required: val._required, message: `请${text}${val.label}`, trigger: RulesTriggerEnum[val.type]},
 				]
 			}
 		}

@@ -1,8 +1,30 @@
 import {InitDataType} from './../types/field'
-
+import {ref, computed} from 'vue'
 export const initData: InitDataType = {
 	input: () => {
-		return null
+		const hide = ref(true)
+		return [
+			{
+				key: 'type',
+				value: 'text',
+				elType: 'select',
+				tick: (val) => {
+					hide.value = val === 'text'
+				},
+			},
+			{
+				key: 'rows',
+				value: '2',
+				elType: 'inputNumber',
+				hide: () => hide.value,
+			},
+			{
+				key: 'maxlength',
+				value: '1000',
+				elType: 'inputNumber',
+				hide: () => hide.value,
+			},
+		]
 	},
 	checkbox: () => {
 		return [
@@ -31,10 +53,6 @@ export const initData: InitDataType = {
 			},
 		]
 	},
-	// textarea: () => ({
-	// 	_rows: 2,
-	// 	_maxlength: 1000,
-	// }),
 	upload: () => {
 		return [
 			{
@@ -84,6 +102,9 @@ export const initData: InitDataType = {
 		]
 	},
 	datePicker: () => {
+		return null
+	},
+	timePicker: () => {
 		return null
 	},
 }

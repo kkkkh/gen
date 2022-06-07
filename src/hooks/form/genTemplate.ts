@@ -26,7 +26,7 @@ export const genTemplate = (formConfig: FormConfig = defaultConfig, formList: Fo
 const genFormBtn = (btnList: BtnListType) => {
 	const btn = btnList.map((item, index) => {
 		const type = item.type ? `type='${item.type}'` : ''
-		const click = item.eventMethodName ? `@click="${item.eventMethodName}"` : ''
+		const click = item.methodName ? `@click="${item.methodName}"` : ''
 		return `<el-button ${type} ${click}>${item.value}</el-button>`
 	})
 	return `<el-form-item label-width="0px">
@@ -62,7 +62,6 @@ export const genFormItem = (formItem: FormItemType, genTypeVal: string) => {
 	const form = `<el-form-item label="${formItem.label}" prop="${formItem.field}">
       ${genTypeVal}
     </el-form-item>`
-
 	return form
 }
 
@@ -71,7 +70,10 @@ const genDisbale = (disabled: boolean) => {
 }
 export const genComponent: GenComponentType = {
 	input: (val) => {
-		const input = `<el-input v-model="form.${val.field}" ${disabled} placeholder="请输入${val.label}" clearable />`
+		const attrs = Object.fromEntries(val?.attrs?.map((item) => [item.key, item.value]) || [])
+		const textare =
+			attrs.type === 'textarea' ? `type="${attrs.type}" :rows="${attrs.rows}" :maxlength="${attrs.maxlength}"` : ':'
+		const input = `<el-input v-model="form.${val.field}" ${disabled} ${textare} placeholder="请输入${val.label}" clearable />`
 		return input
 	},
 	select: (val) => {
@@ -142,5 +144,12 @@ export const genComponent: GenComponentType = {
 		placeholder="请选择${val.label}"
 		${disabled}>
 		</el-date-picker>`
+	},
+	timePicker: (val) => {
+		return `<el-time-picker
+		v-model="form.${val.field}"
+		placeholder="请选择${val.label}"
+		${disabled}>
+		</el-time-picker>`
 	},
 }

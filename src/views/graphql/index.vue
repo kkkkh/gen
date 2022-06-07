@@ -72,7 +72,6 @@ const getTypeStr = (code: string) => {
 }
 const getApiWholeStr = (code: string, typeStr: string) => {
     const apiStr = getApiStr(code)
-    debugger
     return apiStr.map(item => `${typeStr} ${item}`).join("\n")
 }
 
@@ -89,7 +88,6 @@ const getApiStr = (code: string): string[] => {
         const filtergReg = /^#/
         // 对每一组数据进行处理
         const apiArr = groupRes.filter(groupItem => !filtergReg.test(groupItem) && groupItem !== "").map(item => {
-            debugger
             const apiNameStr = getApiNameStr(item)
             const apiParamsStr = getApiParamsStr(item)
             return getApiTemplate(apiNameStr, apiParamsStr)

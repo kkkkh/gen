@@ -62,7 +62,6 @@ const genElForm = ref()
 const genCnHandle = () => {
     genElForm.value.validateField('cnLabel', (res: string) => {
         if (!res) {
-            debugger
             const labels = form.cnLabel.split(/\s+/)
             const columns = labels.map((label, index) => {
                 return {

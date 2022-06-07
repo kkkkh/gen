@@ -1,5 +1,5 @@
 import { ref, defineComponent } from 'vue'
-import { typeOptions, controlsPositionOptions } from '@/data/options'
+import { typeOptions as formTypeOptions, controlsPositionOptions, inputTypeOptions as typeOptions} from '@/data/options'
 import { initData } from '@/data/init'
 import { getField } from '@/data/default'
 import { genCode } from '@/hooks/form/genCode'
@@ -15,7 +15,7 @@ import {StorageItemType} from '@/types/stroage'
 
 import { ElForm, ElMessage } from 'element-plus'
 import { Delete } from '@element-plus/icons'
-import BtnBar from '@/components/form/btnBar.vue'
+import BtnBar from '@/components/form/btnBar.tsx'
 import ToolBar from '@/components/form/toolBar.vue'
 import StorageBar from '@/components/form/storageBar.vue'
 export default defineComponent({
@@ -73,9 +73,12 @@ export default defineComponent({
       setConfigForm(storageValue.configForm)
       viewCodeHandle()
     }
-    const btns = ref([{ value: '取消', eventMethodName: 'cancel' }, { value: '保存', type: 'primary', eventMethodName: 'save' }])
+    const btns = ref<BtnListType>([
+      { value: '取消', methodName: 'cancel',type:undefined, isValidate: false}, 
+      { value: '保存', methodName: 'save', type:'primary', isValidate: true }])
     const options:{[name:string]:any[]} = {
-      controlsPositionOptions
+      controlsPositionOptions,
+      typeOptions,
     }
     return ()=> {
       const structureCom:StructureComType = {
@@ -96,7 +99,7 @@ export default defineComponent({
         },
         select(attrs){
           return (
-            <el-select v-model={attrs.value} placeholder>
+            <el-select v-model={attrs.value} placeholder onChange={attrs.tick}>
               {
                 options[`${attrs.key as string}Options`].map(item =>
                   <el-option key={item.value} value={item.value}>{ item.label }</el-option>
@@ -129,7 +132,7 @@ export default defineComponent({
                   ]}>
                     <el-select v-model={form.type} clearable onChange={(type: any) => typeChange(type, index)}>
                       {
-                        typeOptions.map(item =>
+                        formTypeOptions.map(item =>
                         <el-option key={index} value={item.value}>{ item.label }</el-option>
                         )
                       }
@@ -145,11 +148,11 @@ export default defineComponent({
                     <el-checkbox v-model={form._required} clearable></el-checkbox>
                   </el-form-item>
                   {form.type && form.attrs ? form.attrs.map((item)  => {
-                    return <el-form-item label={item.key} prop={item.key}>
+                    return !item.hide || !item.hide() ?<el-form-item label={item.key} prop={item.key}>
                       {
                         structureCom[item.elType](item)
                       }
-                    </el-form-item>
+                    </el-form-item>:null
                   }):null}
                 </div>
               </div>
