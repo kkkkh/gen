@@ -22,14 +22,3 @@ export type FormKeyType =
 export type FormKeyTypeNoUd = Exclude<FormKeyType, undefined>
 
 export type FormDataType = {[name: string]: unknown}
-
-export enum RulesTriggerEnum {
-	input = 'blur',
-	select = 'change',
-	checkbox = 'change',
-	radio = 'change',
-	upload = 'change',
-	inputNumber = 'change',
-	datePicker = 'change',
-	timePicker = 'change',
-}
