@@ -1,9 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import {FormListType, FormItemType, GenComponentType, StoreFiledType} from '../../types/field'
-import {BtnListType} from '@/types/btn'
-import {FormConfig} from '../../types/config'
-import {defaultConfig} from '../../data/default'
-import {radio, checkbox} from '@/data/word'
+import {FormListType, FormItemType, GenComponentType, BtnListType, FormConfig} from '@/types/index'
+import {defaultConfig, radio} from '@/data/index'
 let disabled = ''
 export const genTemplate = (formConfig: FormConfig = defaultConfig, formList: FormListType, btnList: BtnListType) => {
 	disabled = genDisbale(formConfig._globalDisabled)

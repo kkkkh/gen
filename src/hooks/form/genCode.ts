@@ -1,9 +1,7 @@
-import {BtnListType} from '@/types/btn'
-import {FormListType} from '../../types/field'
-import {genScript} from './genScript'
-import {FormConfig} from '../../types/config'
-import {defaultConfig} from '../../data/default'
+import {FormListType, BtnListType, FormConfig} from '@/types/index'
+import {defaultConfig} from '@/data/index'
 import {genTemplate} from './genTemplate'
+import {genScript} from './genScript'
 
 export const genCode = (formConfig: FormConfig = defaultConfig, formList: FormListType, btnList: BtnListType) => {
 	const htmlStr = genTemplate(formConfig, formList, btnList)

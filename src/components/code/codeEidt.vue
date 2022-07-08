@@ -1,17 +1,7 @@
 <template>
-    <codemirror
-        v-model="code"
-        placeholder="Code goes here..."
-        :style="{ height: '600px' }"
-        :autofocus="true"
-        :indent-with-tab="true"
-        :tabSize="2"
-        :extensions="extensions"
-        @ready="log('ready', $event)"
-        @change="log('change', $event)"
-        @focus="log('focus', $event)"
-        @blur="log('blur', $event)"
-    />
+    <codemirror v-model="code" placeholder="Code goes here..." :style="{ height: '600px' }" :autofocus="true"
+        :indent-with-tab="true" :tabSize="2" :extensions="extensions" @ready="log('ready', $event)"
+        @change="log('change', $event)" @focus="log('focus', $event)" @blur="log('blur', $event)" />
 </template>
 <script setup lang="ts">
 import { Codemirror } from 'vue-codemirror'
@@ -26,11 +16,11 @@ const props = defineProps({
     },
 });
 const code = ref('')
-const extensions = [javascript(),html(), oneDark]
+const extensions = [javascript(), html(), oneDark]
 watch(() => props.value, (val: string) => {
     code.value = val
 })
-const log = (type:string,event:unknown)=>{
-    console.log(type,event)
+const log = (type: string, event: unknown) => {
+    console.log(type, event)
 }
 </script>

@@ -41,8 +41,8 @@
 </template>
 <script setup lang="ts">
 import { ref } from "vue";
-import { configHandle } from "@/hooks/form/configForm";
-import { scriptOptions } from '@/data/options'
+import { configHandle } from "@/hooks/index";
+import { scriptOptions } from '@/data/index'
 
 const direction = ref('ltr')
 const { visible, show, close, configForm } = configHandle()

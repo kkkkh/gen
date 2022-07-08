@@ -1,17 +1,9 @@
 import { ref, defineComponent } from 'vue'
-import { typeOptions as formTypeOptions, controlsPositionOptions, inputTypeOptions as typeOptions} from '@/data/options'
-import { initData } from '@/data/init'
-import { getField } from '@/data/default'
-import { genCode } from '@/hooks/form/genCode'
+import { typeOptions as formTypeOptions, controlsPositionOptions, inputTypeOptions as typeOptions, initData, getField } from '@/data/index'
 import { prettierFormat } from '@/utils/format'
-import { configHandle, setConfigForm } from "@/hooks/form/configForm"
-import { storageHandle } from '@/hooks/form/storage'
+import { genCode, configHandle, setConfigForm, storageHandle } from "@/hooks/form/index"
 
-import { FeildType, FormListType } from '@/types/field'
-import { FormKeyType } from '@/types/form'
-import { StructureComType } from '@/types/structure'
-import {BtnListType} from '@/types/btn'
-import {StorageItemType} from '@/types/stroage'
+import { FeildType, FormListType, FormKeyType, StructureComType, BtnListType, StorageItemType, OptionType } from '@/types/index'
 
 import { ElForm, ElMessage } from 'element-plus'
 import { Delete } from '@element-plus/icons'
@@ -20,12 +12,12 @@ import ToolBar from '@/components/form/toolBar.vue'
 import StorageBar from '@/components/form/storageBar.vue'
 export default defineComponent({
   emits: ['update:code'],
-  components:{
+  components: {
     ToolBar,
     BtnBar,
     StorageBar,
   },
-  setup(_props, { emit: emits }){
+  setup(_props, { emit: emits }) {
     const elFormRef = ref<typeof ElForm>()
     const ruleForm = ref<FeildType<FormKeyType>[]>([getField()])
     const delHandle = (index: number) => {
@@ -65,44 +57,44 @@ export default defineComponent({
       }
     }
     const addHandle = (num: number) => {
-      const fArr = new Array(num).fill(getField()) 
+      const fArr = new Array(num).fill(getField())
       ruleForm.value.push(...fArr)
     }
-    const updateStorage = (storageValue:StorageItemType)=>{
+    const updateStorage = (storageValue: StorageItemType) => {
       ruleForm.value = storageValue.ruleForm
       setConfigForm(storageValue.configForm)
       viewCodeHandle()
     }
     const btns = ref<BtnListType>([
-      { value: '取消', methodName: 'cancel',type:undefined, isValidate: false}, 
-      { value: '保存', methodName: 'save', type:'primary', isValidate: true }])
-    const options:{[name:string]:any[]} = {
+      { value: '取消', methodName: 'cancel', type: undefined, isValidate: false },
+      { value: '保存', methodName: 'save', type: 'primary', isValidate: true }])
+    const options: Record<string, OptionType<string>[]> = {
       controlsPositionOptions,
       typeOptions,
     }
-    return ()=> {
-      const structureCom:StructureComType = {
-        input: (attrs)=>{
+    return () => {
+      const structureCom: StructureComType = {
+        input: (attrs) => {
           return (
             <el-input v-model={attrs.value} clearable></el-input>
           )
         },
-        checkbox: (attrs)=>{
+        checkbox: (attrs) => {
           return (
             <el-checkbox v-model={attrs.value} clearable></el-checkbox>
           )
         },
-        inputNumber(attrs){
+        inputNumber(attrs) {
           return (
             <el-input-number v-model={attrs.value} clearable max={100} min={0}></el-input-number>
           )
         },
-        select(attrs){
+        select(attrs) {
           return (
             <el-select v-model={attrs.value} placeholder onChange={attrs.tick}>
               {
                 options[`${attrs.key as string}Options`].map(item =>
-                  <el-option key={item.value} value={item.value}>{ item.label }</el-option>
+                  <el-option key={item.value} value={item.value}>{item.label}</el-option>
                 )
               }
             </el-select>
@@ -111,55 +103,55 @@ export default defineComponent({
       }
       return (
         <div class="gen-form">
-          <toolBar onAdd={addHandle} onGen={genHandle}/>
+          <toolBar onAdd={addHandle} onGen={genHandle} />
           <el-form class="px-2" ref={elFormRef} label-width="80px" size="mini" model={ruleForm}>
-          {
-            ruleForm.value.map((form,index) => 
-              <div class="flex flex-col p-4 bg-gray-500 odd:bg-gray-900" key={index}>
-                <div class="flex items-start">
-                  <el-form-item label="label" prop="label">
-                    <el-input v-model={form.label} clearable></el-input>
-                  </el-form-item>
-                  <el-form-item label="field" prop="field">
-                    <el-input v-model={form.field} clearable></el-input>
-                  </el-form-item>
-                  <el-form-item label="type" prop={`${index}.type`} rules={[
-                    {
-                      required: true,
-                      message: '请输入type',
-                      trigger: 'change',
-                    },
-                  ]}>
-                    <el-select v-model={form.type} clearable onChange={(type: any) => typeChange(type, index)}>
+            {
+              ruleForm.value.map((form, index) =>
+                <div class="flex flex-col p-4 bg-gray-500 odd:bg-gray-900" key={index}>
+                  <div class="flex items-start">
+                    <el-form-item label="label" prop="label">
+                      <el-input v-model={form.label} clearable></el-input>
+                    </el-form-item>
+                    <el-form-item label="field" prop="field">
+                      <el-input v-model={form.field} clearable></el-input>
+                    </el-form-item>
+                    <el-form-item label="type" prop={`${index}.type`} rules={[
                       {
-                        formTypeOptions.map(item =>
-                        <el-option key={index} value={item.value}>{ item.label }</el-option>
-                        )
-                      }
-                    </el-select>
-                  </el-form-item>
-                  {index !== 0?<el-button class="ml-4" type="danger" icon={Delete} onClick={()=>delHandle(index)}></el-button>:''}
+                        required: true,
+                        message: '请输入type',
+                        trigger: 'change',
+                      },
+                    ]}>
+                      <el-select v-model={form.type} clearable onChange={(type: any) => typeChange(type, index)}>
+                        {
+                          formTypeOptions.map(item =>
+                            <el-option key={index} value={item.value}>{item.label}</el-option>
+                          )
+                        }
+                      </el-select>
+                    </el-form-item>
+                    {index !== 0 ? <el-button class="ml-4" type="danger" icon={Delete} onClick={() => delHandle(index)}></el-button> : ''}
+                  </div>
+                  <div class="flex flex-wrap">
+                    <el-form-item label="_value" prop="_value">
+                      <el-input v-model={form._value} clearable></el-input>
+                    </el-form-item>
+                    <el-form-item style="width:258px" label="_required" prop="_required">
+                      <el-checkbox v-model={form._required} clearable></el-checkbox>
+                    </el-form-item>
+                    {form.type && form.attrs ? form.attrs.map((item) => {
+                      return !item.hide || !item.hide() ? <el-form-item label={item.key} prop={item.key}>
+                        {
+                          structureCom[item.elType](item)
+                        }
+                      </el-form-item> : null
+                    }) : null}
+                  </div>
                 </div>
-                <div class="flex flex-wrap">
-                  <el-form-item label="_value" prop="_value">
-                    <el-input v-model={form._value} clearable></el-input>
-                  </el-form-item>
-                  <el-form-item style="width:258px" label="_required" prop="_required">
-                    <el-checkbox v-model={form._required} clearable></el-checkbox>
-                  </el-form-item>
-                  {form.type && form.attrs ? form.attrs.map((item)  => {
-                    return !item.hide || !item.hide() ?<el-form-item label={item.key} prop={item.key}>
-                      {
-                        structureCom[item.elType](item)
-                      }
-                    </el-form-item>:null
-                  }):null}
-                </div>
-              </div>
-            )
-          }
+              )
+            }
           </el-form>
-          <btn-bar value={btns.value} onUpdate:value={(val:BtnListType)=> btns.value = val}></btn-bar>
+          <btn-bar value={btns.value} onUpdate:value={(val: BtnListType) => btns.value = val}></btn-bar>
           <storage-bar onUpdate={updateStorage}></storage-bar>
         </div>
       )

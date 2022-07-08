@@ -13,19 +13,24 @@ const routes: Array<RouteRecordRaw> = [
 	{
 		path: '/table',
 		name: 'table',
-		component: () => import(/* webpackChunkName: "dataTable" */ '../views/table/index.vue'),
+		component: () => import(/* webpackChunkName: "table" */ '../views/table/index.vue'),
 		children: [
+			{
+				path: 'index',
+				name: 'table-index',
+				component: () => import(/* webpackChunkName: "table-index" */ '../views/table/table.vue'),
+			},
 			{
 				path: 'data',
 				name: 'table-data',
-				component: () => import(/* webpackChunkName: "dataTable" */ '../views/table/data.vue'),
+				component: () => import(/* webpackChunkName: "table-data" */ '../views/table/data.vue'),
 			},
 		],
 	},
 	{
 		path: '/graphql',
-		name: 'data-graphql',
-		component: () => import(/* webpackChunkName: "dataTable" */ '../views/graphql/index.vue'),
+		name: 'graphql',
+		component: () => import(/* webpackChunkName: "graphql" */ '../views/graphql/index.vue'),
 	},
 ]
 

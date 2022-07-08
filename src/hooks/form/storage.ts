@@ -1,6 +1,5 @@
 import {ref} from 'vue'
-import {StorageItemType} from '../../types/stroage'
-import {OptionType} from '@/types/option'
+import {StorageItemType, OptionType} from '@/types/index'
 
 const storage = ref<OptionType<string>[]>([])
 export const storageHandle = (name: string) => {

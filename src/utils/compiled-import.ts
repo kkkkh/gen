@@ -1,4 +1,4 @@
-import {ImportsType} from '@/types/imports'
+import {ImportsType} from '@/types/index'
 
 const globalVar: {[name: string]: string} = {
 	'@vue/composition-api': 'VueCompositionAPI',

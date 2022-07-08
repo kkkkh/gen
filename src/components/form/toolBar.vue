@@ -29,7 +29,7 @@
 <script setup lang="ts">
 import { ref, reactive, onMounted } from "vue";
 import ConfigFormDrawer from '@/components/form/configFormDrawer.vue'
-import { scrollHandle } from "@/hooks/tool/scroll";
+import { scrollHandle } from "@/hooks/index";
 // drawer
 const configFormDrawer = ref();
 const show = () => {

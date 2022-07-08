@@ -1,4 +1,4 @@
-import {HandleType} from '@/types/scroll'
+import {HandleType} from '@/types/index'
 // import {Ref} from 'vue'
 import {throttle} from 'lodash'
 

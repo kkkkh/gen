@@ -36,4 +36,4 @@ class Iframe {
 	}
 }
 
-export default (args: {el: Element; sandboxAttributes: string[]}) => new Iframe(args)
+export const createIframe = (args: {el: Element; sandboxAttributes: string[]}) => new Iframe(args)

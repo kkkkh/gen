@@ -1,4 +1,4 @@
-import {ImportsType} from '@/types/imports'
+import {ImportsType} from '@/types/index'
 import {NodePath} from 'babel__traverse'
 import {ImportDeclaration, isImportSpecifier, isIdentifier} from '@babel/types'
 

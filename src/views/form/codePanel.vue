@@ -27,8 +27,7 @@ import { ElMessage } from "element-plus";
 import { watch, ref } from "vue";
 import CodeEidt from "@/components/code/codeEidt.vue";
 import PreviewPanel from "@/components/code/previewPanel.vue";
-import { configHandle } from '@/hooks/form/configForm'
-import { compileCode } from "@/hooks/code/compileCode";
+import { configHandle, compileCode } from '@/hooks/index'
 const { configForm } = configHandle()
 const props = defineProps({
   code: {

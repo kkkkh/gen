@@ -11,6 +11,7 @@
 			<el-menu-item index="/form">form</el-menu-item>
 			<el-sub-menu index="/table">
 				<template #title>table</template>
+				<el-menu-item index="/table/index">index</el-menu-item>
 				<el-menu-item index="/table/data">data</el-menu-item>
 			</el-sub-menu>
 			<el-menu-item index="/graphql">graphql</el-menu-item>

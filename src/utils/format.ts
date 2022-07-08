@@ -1,4 +1,4 @@
-import {ParserType, ParseHandleType} from '@/types/format'
+import {ParserType, ParseHandleType} from '@/types/index'
 import prettier from 'https://unpkg.com/prettier@2.6.2/esm/standalone.mjs'
 import parserHtml from 'https://unpkg.com/prettier@2.6.2/esm/parser-html.mjs'
 import parserBabel from 'https://unpkg.com/prettier@2.6.2/esm/parser-babel.mjs'

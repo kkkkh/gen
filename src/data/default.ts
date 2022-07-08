@@ -1,6 +1,4 @@
-import {FormFeild} from './../types/field'
-import {FormKeyType} from '../types/form'
-import {FormConfig} from '../types/config'
+import {FormFeild, FormKeyType, FormConfig} from '@/types/index'
 
 export const defaultConfig: FormConfig = {
 	ref: 'formComponent',

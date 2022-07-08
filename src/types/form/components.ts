@@ -1,5 +1,5 @@
-import {FormKeyTypeNoUd} from '@/types/form'
-import {ScriptType} from '@/types/config'
+import {FormKeyTypeNoUd} from './form'
+import {ScriptType} from './config'
 
 export type KeyMapType = {
 	[P in FormKeyTypeNoUd]: string[]

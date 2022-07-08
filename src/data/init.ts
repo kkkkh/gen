@@ -1,5 +1,5 @@
-import {InitDataType} from './../types/field'
-import {ref, computed} from 'vue'
+import {InitDataType} from '@/types/index'
+import {ref} from 'vue'
 export const initData: InitDataType = {
 	input: () => {
 		const hide = ref(true)

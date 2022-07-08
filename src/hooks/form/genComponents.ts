@@ -1,7 +1,5 @@
-import {FormListType} from '@/types/field'
-import {configHandle} from '@/hooks/form/configForm'
-import {FormKeyTypeNoUd} from '@/types/form'
-import {KeyMapType, ElementUIFromType} from '@/types/components'
+import {FormListType, FormKeyTypeNoUd, KeyMapType, ElementUIFromType} from '@/types/index'
+import {configHandle} from './configForm'
 
 const {configForm} = configHandle()
 

@@ -13,7 +13,7 @@
 </template>
 <script setup lang="ts">
 import { CircleCloseFilled } from '@element-plus/icons'
-import { storageHandle } from '@/hooks/form/storage'
+import { storageHandle } from '@/hooks/form/index'
 const emit = defineEmits(["update"])
 const { storage, getStorage, deleteStorage } = storageHandle('form')
 const viewStorage = (index: number) => {

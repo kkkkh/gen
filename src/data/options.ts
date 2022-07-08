@@ -1,6 +1,4 @@
-import {ScriptType} from '@/types/config'
-import {BtnThemeType} from '@/types/btn'
-import {FormOptionType, OptionType} from '../types/option'
+import {ScriptType, BtnThemeType, FormOptionType, OptionType} from '@/types/index'
 export const typeOptions: FormOptionType[] = [
 	{label: 'input', value: 'input'},
 	{label: 'select', value: 'select'},
